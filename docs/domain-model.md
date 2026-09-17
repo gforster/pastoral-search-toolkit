@@ -1,12 +1,12 @@
 # Domain model
 
-The unit of work is a **Pastoral Search Project**, not a candidate record or a mandatory wizard. Every module can be opened at any time. An unknown answer is useful information; it generates a task with a milestone, rather than blocking unrelated preparation.
+The shared unit of work is a **Pastoral Search Project**, with distinct candidate, individual-review, decision and assignment records. Every module can be opened at any time. An unknown answer is useful information; it generates a task with a milestone, rather than blocking unrelated preparation.
 
 ## Project and persistence
 
 `Project` has an ID, schema version, name, created/updated timestamps, orientation context, a selected milestone, keyed answers, module review records, church-authored requirements, and qualification working definitions. Multiple projects may coexist on one device. JSON backups carry the complete project and schema version. Import validates structure and limits before creating a separate project; it never silently overwrites another project.
 
-Device-local storage is the initial privacy boundary. No account, server database, telemetry, candidate repository, or automated candidate ranking is needed. Users must be told where their work is stored, that browser data can be cleared, that this is not an encrypted vault, and that exported backups need appropriate care. A persistence error must preserve current work and offer export. Simultaneous tabs must not silently overwrite each other.
+Device-local storage is the initial privacy boundary. No account, server database, telemetry or automated candidate ranking is needed. Users must be told where their work is stored, that browser data can be cleared, that this is not an encrypted vault, and that exported backups need appropriate care. A persistence error must preserve current work and offer export. Simultaneous tabs must not silently overwrite each other.
 
 ## Independently editable modules
 
@@ -67,3 +67,20 @@ This edition organizes the church's process, not sensitive candidate dossiers. I
 ## Schema v2 and reusable configuration
 
 The canonical TypeScript/Zod schema is `src/schema/pastoral-search-project.ts`. It adds custom questions, artifact options/approval records and separately typed preset suggestions. `migrations.ts` upgrades v1 without guessing missing church decisions. The active project holds private cycle data; a conservative allowlist in `src/domain/templates.ts` extracts reusable fields without copying dates, committee names, compensation or transition circumstances. Free text still requires human privacy review. IndexedDB stores complete project records transactionally, with revision conflict detection and one-time preservation of legacy browser records.
+
+## Schema v3: distinct committee records
+
+The existing shared configuration remains in `answers`, `qualifications`, `requirements` and related workbook fields. Legacy `reviews` continues to mean module-review attestations; individual candidate submissions live separately inside `collaboration.rounds`.
+
+- **Committee member:** local identifier, display name, optional initials/email, descriptive role, active state and voting label. None proves authenticated identity, attendance or quorum.
+- **Candidate:** independent ID, name, limited context, process stage/status, outstanding evidence, reference/progress counters and evidence metadata/links. Multiple prospects can coexist; there is no comparative score.
+- **Review round:** candidate ID, activity type, fixed criteria/evidence/context snapshot, expected reviewer references, instructions, creation time and open/closed/released state. Five types cover sermons, materials, interviews, qualifications and general review.
+- **Individual submission:** stable review ID, search/candidate/round/snapshot references, self-entered reviewer, original submission and last modification, structured responses, observations, concerns and proposed questions. Explicit replacements keep up to ten previous revisions.
+- **Committee decision:** date, candidate or project scope, stage, actual conclusion, rationale, unresolved concerns, result, recorder and follow-up. Only explicitly entered candidate decisions update process status. Reviews and historical project decisions never silently set workbook approval attestations.
+- **Assignment:** optional owner, calendar date, candidate and module, with open/in-progress/done status. `prerequisite: false` is ordinary work; omitted/true preserves milestone prerequisite semantics for older tasks.
+
+Schema migration v1 -> v2 -> v3 is nonmutating and additive. v2 receives an empty collaboration aggregate with its old ID as stable search fingerprint. New searches use a random fingerprint. A full backup retains the fingerprint but imports under a new local ID. Fixtures represent both v2 and v3. Candidate records and round submissions are validated for linkage, unique IDs, supported response categories and bounds.
+
+Portable Review Packet and Completed Review formats are independently versioned at 1 and bounded at 750 KB. Full backups are bounded at 10 MB. Different project, candidate, round or criteria snapshot imports are rejected. Stale current criteria/evidence requires acknowledgment while the original snapshot remains intact. Closed/released rounds must be reopened before additional imports.
+
+A compilation shows participation, response-category counts, divergent categories, every concern, original attribution and exact normalized question groups. It never generates a gate pass, percentage score or candidate recommendation. See the [collaboration architecture](collaboration-architecture.md).

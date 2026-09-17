@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "id": "fixture-v2",
+  "name": "Fictional legacy search",
+  "createdAt": "2026-09-17T14:27:06.975Z",
+  "updatedAt": "2026-09-17T14:27:06.976Z",
+  "revision": 0,
+  "milestone": "stabilize",
+  "answers": {
+    "churchName": {
+      "status": "known",
+      "value": "Fixture Church"
+    }
+  },
+  "reviews": {},
+  "qualifications": {},
+  "requirements": [],
+  "questions": [],
+  "tasks": [
+    {
+      "id": "verify-notice",
+      "label": "Verify notice",
+      "owner": "Clerk",
+      "due": 1,
+      "resolved": false
+    }
+  ],
+  "inventory": {},
+  "customQuestions": [],
+  "artifactOptions": {
+    "includeStatus": true
+  },
+  "artifactReviews": {},
+  "presetSuggestions": null
+}

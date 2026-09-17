@@ -389,10 +389,12 @@ export function makeDocument(p, id) {
         ]),
         section(
           'Additional church prerequisites',
-          ...p.tasks.map(
-            (t) =>
-              `${t.resolved ? '☑' : '☐'} ${t.label} — ${MILESTONES[t.due].title}; responsible: ${t.owner || 'not assigned'}`,
-          ),
+          ...p.tasks
+            .filter((t) => t.prerequisite !== false)
+            .map(
+              (t) =>
+                `${t.resolved ? '☑' : '☐'} ${t.label} — ${MILESTONES[t.due].title}; responsible: ${t.owner || 'not assigned'}`,
+            ),
         ),
       ];
       break;
@@ -678,9 +680,9 @@ export function makeDocument(p, id) {
     includeStatus: p.artifactOptions.includeStatus,
     approval: review?.record || '',
     provenance: {
-      applicationVersion: '0.2.0',
+      applicationVersion: '0.3.0',
       schemaVersion: p.schemaVersion,
-      templateVersion: '2026-09-17.1',
+      templateVersion: '2026-09-17.2',
       projectUpdatedAt: p.updatedAt,
       generatedAt: new Date().toISOString(),
     },

@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { CollaborationSchema, CalendarDate, Id } from './collaboration';
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 const text = z.string().max(20_000);
 const identifier = z.string().regex(/^[\w-]{1,80}$/);
 const timestamp = z
@@ -34,6 +35,18 @@ export const ChurchTemplateSchema = z.object({
   answers: z.record(z.string(), AnswerSchema),
   requirements: z.array(RequirementSchema).max(200),
   questions: z.array(z.string()).max(300),
+  qualifications: z
+    .record(
+      z.string(),
+      z.object({
+        meaning: text.optional(),
+        evidence: text.optional(),
+        disqualifying: text.optional(),
+        questions: text.optional(),
+      }),
+    )
+    .optional(),
+  artifactOptions: z.object({ includeStatus: z.boolean() }).optional(),
 });
 export const PastoralSearchProjectSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION),
@@ -73,6 +86,11 @@ export const PastoralSearchProjectSchema = z.object({
         owner: z.string().max(500),
         due: z.number().int().min(0).max(6),
         resolved: z.boolean(),
+        dueDate: CalendarDate.optional(),
+        candidateId: Id.nullable().optional(),
+        moduleId: z.string().max(80).optional(),
+        status: z.enum(['open', 'in_progress', 'done']).optional(),
+        prerequisite: z.boolean().optional(),
       }),
     )
     .max(200),
@@ -83,6 +101,7 @@ export const PastoralSearchProjectSchema = z.object({
     z.object({ at: timestamp, record: z.string().min(1).max(1000) }),
   ),
   presetSuggestions: ChurchTemplateSchema.nullable(),
+  collaboration: CollaborationSchema,
 });
 export type PastoralSearchProject = z.infer<typeof PastoralSearchProjectSchema>;
 export type ChurchTemplate = z.infer<typeof ChurchTemplateSchema>;

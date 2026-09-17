@@ -1,4 +1,5 @@
 import { migrateProject } from '../schema/migrations.ts';
+import { emptyCollaboration, validateCollaboration } from '../schema/collaboration.ts';
 import {
   SCHEMA_VERSION,
   FIELDS,
@@ -9,7 +10,7 @@ import {
   QUESTIONS,
   PATHS,
 } from '../data.js';
-export const MAX_BACKUP_BYTES = 2_000_000;
+export const MAX_BACKUP_BYTES = 10_000_000;
 export const now = () => new Date().toISOString();
 export const uid = () => globalThis.crypto.randomUUID();
 export const stageIndex = (id) => MILESTONES.findIndex((s) => s.id === id);
@@ -36,6 +37,7 @@ export function newProject(path = 'sudden') {
     artifactOptions: { includeStatus: true },
     artifactReviews: {},
     presetSuggestions: null,
+    collaboration: emptyCollaboration(uid()),
   };
 }
 export function applicable(p, f) {
@@ -82,7 +84,7 @@ export function readiness(p, milestone = p.milestone) {
   const index = stageIndex(milestone);
   if (index < 0) throw new Error('Choose a valid milestone.');
   const missing = FIELDS.filter((f) => applicable(p, f) && requiredAt(f, index) && !resolved(p, f));
-  const custom = p.tasks.filter((t) => t.due <= index && !t.resolved);
+  const custom = p.tasks.filter((t) => t.prerequisite !== false && t.due <= index && !t.resolved);
   return {
     ready: missing.length === 0 && custom.length === 0,
     missing,
@@ -114,7 +116,7 @@ export function tasksFor(p) {
     })
     .concat(
       p.tasks
-        .filter((t) => !t.resolved)
+        .filter((t) => t.prerequisite !== false && !t.resolved)
         .map((t) => ({
           ...t,
           module: 'call',
@@ -327,7 +329,7 @@ export function validateProject(raw) {
         t.due < MILESTONES.length &&
         typeof t.resolved === 'boolean',
     );
-    p.tasks.push({ id: t.id, label: t.label, owner: t.owner, due: t.due, resolved: t.resolved });
+    p.tasks.push({ ...t });
   }
   for (const [id, status] of Object.entries(raw.inventory)) {
     assert(
@@ -345,6 +347,21 @@ export function validateProject(raw) {
   p.artifactOptions = raw.artifactOptions;
   p.artifactReviews = raw.artifactReviews;
   p.presetSuggestions = raw.presetSuggestions;
+  p.collaboration = validateCollaboration(raw.collaboration);
+  for (const t of p.tasks) {
+    if (t.candidateId)
+      assert(
+        p.collaboration.candidates.some((c) => c.id === t.candidateId),
+        'Task references a missing candidate.',
+      );
+    if (t.moduleId)
+      assert(
+        MODULES.some((m) => m.id === t.moduleId),
+        'Task references an unknown module.',
+      );
+    if (t.status)
+      assert(t.resolved === (t.status === 'done'), 'Task completion and status disagree.');
+  }
   if (p.presetSuggestions)
     for (const [id, a] of Object.entries(p.presetSuggestions.answers)) {
       assert(Object.hasOwn(FIELD_MAP, id));
@@ -367,7 +384,7 @@ export function serializeBackup(p) {
 export function importBackup(text) {
   assert(
     typeof text === 'string' && new TextEncoder().encode(text).length <= MAX_BACKUP_BYTES,
-    'Choose a project JSON backup smaller than 2 MB.',
+    'Choose a project JSON backup smaller than 10 MB.',
   );
   let raw;
   try {
@@ -381,7 +398,7 @@ export function importBackup(text) {
     );
   assert(
     raw?.format === 'pastoral-search-toolkit' &&
-      [1, SCHEMA_VERSION].includes(raw.schemaVersion) &&
+      [1, 2, SCHEMA_VERSION].includes(raw.schemaVersion) &&
       raw.project?.schemaVersion === raw.schemaVersion,
     'Choose a Pastoral Search Toolkit backup in a supported version.',
   );

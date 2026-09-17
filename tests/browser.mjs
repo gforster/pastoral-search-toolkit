@@ -418,6 +418,9 @@ try {
     mimeType: 'application/json',
     buffer: Buffer.from('{broken'),
   });
+  await legacyPage.waitForFunction(() =>
+    document.querySelector('#feedback')?.textContent.includes('not a valid JSON'),
+  );
   assert.match(await legacyPage.locator('#feedback').textContent(), /not a valid JSON/);
   assert.equal(await legacyPage.locator('.project-row').count(), 1);
   await legacyContext.close();

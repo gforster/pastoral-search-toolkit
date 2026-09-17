@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 3,
+  "id": "fixture-v3",
+  "name": "Fictional collaboration search",
+  "createdAt": "2026-09-17T14:27:06.976Z",
+  "updatedAt": "2026-09-17T14:27:06.976Z",
+  "revision": 0,
+  "milestone": "stabilize",
+  "answers": {},
+  "reviews": {},
+  "qualifications": {},
+  "requirements": [],
+  "questions": [],
+  "tasks": [],
+  "inventory": {},
+  "customQuestions": [],
+  "artifactOptions": {
+    "includeStatus": true
+  },
+  "artifactReviews": {},
+  "presetSuggestions": null,
+  "collaboration": {
+    "fingerprint": "fixture-search-3",
+    "members": [
+      {
+        "id": "d02466c6-f7f9-4dc4-b8c8-21092227d275",
+        "name": "Fixture Reviewer",
+        "initials": "FR",
+        "role": "chair",
+        "email": "",
+        "active": true,
+        "voting": "unspecified"
+      }
+    ],
+    "candidates": [
+      {
+        "id": "aa21febf-139f-470b-b168-d053d6564fc1",
+        "name": "Fictional Candidate",
+        "context": "",
+        "status": "PROSPECT",
+        "stage": "Initial materials",
+        "evidenceNeeded": "",
+        "createdAt": "2026-09-17T14:27:06.978Z",
+        "updatedAt": "2026-09-17T14:27:06.978Z",
+        "evidence": [],
+        "progress": {
+          "questionnaire": "not_started",
+          "interview": "not_started",
+          "referencesDone": 0,
+          "referencesExpected": 0,
+          "safety": "not_started"
+        }
+      }
+    ],
+    "rounds": [
+      {
+        "id": "aa4e705c-2569-4873-b2ea-333a0021943c",
+        "candidateId": "aa21febf-139f-470b-b168-d053d6564fc1",
+        "title": "Fixture review",
+        "reviewType": "sermon",
+        "instructions": "Independent review",
+        "createdAt": "2026-09-17T14:27:06.979Z",
+        "updatedAt": "2026-09-17T14:27:06.979Z",
+        "state": "open",
+        "expected": [
+          {
+            "id": "d02466c6-f7f9-4dc4-b8c8-21092227d275",
+            "name": "Fixture Reviewer"
+          }
+        ],
+        "snapshot": {
+          "id": "2dd4ae27-be58-4ecf-abf9-c300dde25c91",
+          "templateVersion": 1,
+          "includeDoctrine": false,
+          "criteria": [
+            {
+              "id": "text",
+              "label": "Biblical / textual faithfulness",
+              "prompt": "Record what you observed, the evidence for it and any clarification needed. This is an individual observation, not a committee gate decision.",
+              "hardGate": false
+            },
+            {
+              "id": "clarity",
+              "label": "Clarity",
+              "prompt": "Record what you observed, the evidence for it and any clarification needed. This is an individual observation, not a committee gate decision.",
+              "hardGate": false
+            },
+            {
+              "id": "doctrine",
+              "label": "Doctrine",
+              "prompt": "Record what you observed, the evidence for it and any clarification needed. This is an individual observation, not a committee gate decision.",
+              "hardGate": true
+            },
+            {
+              "id": "application",
+              "label": "Application",
+              "prompt": "Record what you observed, the evidence for it and any clarification needed. This is an individual observation, not a committee gate decision.",
+              "hardGate": false
+            },
+            {
+              "id": "tone",
+              "label": "Pastoral tone",
+              "prompt": "Record what you observed, the evidence for it and any clarification needed. This is an individual observation, not a committee gate decision.",
+              "hardGate": false
+            }
+          ],
+          "context": [],
+          "evidence": []
+        },
+        "submissions": []
+      }
+    ],
+    "decisions": []
+  }
+}

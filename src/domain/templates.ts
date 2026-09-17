@@ -16,9 +16,6 @@ export const REUSABLE_FIELDS = [
   'notice',
   'doctrineText',
   'affirmations',
-  'pastoralModel',
-  'responsibilities',
-  'reporting',
   'prospectPool',
   'seriousConsideration',
 ];
@@ -34,6 +31,12 @@ export function reusableTemplate(project: PastoralSearchProject) {
       .filter((r) => r.category === 'conviction')
       .map((r) => ({ ...r, evidence: '', status: 'draft' })),
     questions: project.questions,
+    qualifications:
+      project.answers.qualificationAdoption?.status === 'known' &&
+      project.answers.qualificationAdoption.value === 'approved'
+        ? structuredClone(project.qualifications)
+        : {},
+    artifactOptions: { ...project.artifactOptions },
   });
 }
 export function suggestPreset(project: PastoralSearchProject, input: unknown) {

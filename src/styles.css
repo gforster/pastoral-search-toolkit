@@ -1568,6 +1568,197 @@
   }
 }
 
+/* Local committee records and independent review workspaces. */
+.collab-section {
+  margin: 2.5rem 0;
+  padding-top: 1rem;
+  border-top: 1px solid #cbd2d7;
+}
+.collab-card,
+.decision-record {
+  background: #fff;
+  border: 1px solid #cbd2d7;
+  border-radius: 10px;
+  padding: 1.3rem;
+  margin: 1rem 0;
+  overflow-wrap: anywhere;
+}
+.collab-card h3,
+.decision-record h3 {
+  margin-top: 0;
+}
+.collab-card h4 {
+  margin: 0 0 0.7rem;
+}
+.collab-form {
+  display: grid;
+  gap: 1.05rem;
+  margin: 1.2rem 0;
+  max-width: 58rem;
+}
+.collab-form label,
+.collab-card > label,
+.file-label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+.collab-form .check-label {
+  display: flex;
+  align-items: flex-start;
+  font-weight: 400;
+}
+.collab-form fieldset {
+  border: 1px solid #cbd2d7;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 0;
+}
+.collab-form fieldset .check-label {
+  margin: 0.5rem 0;
+}
+.collab-form .button {
+  justify-self: start;
+}
+.collab-details {
+  background: #f4f7f5;
+  border: 1px solid #cbd2d7;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  overflow-wrap: anywhere;
+}
+.collab-details > summary {
+  cursor: pointer;
+  font-weight: 650;
+  padding: 0.25rem 0;
+}
+.collab-steps,
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+}
+.collab-steps > span,
+.process-grid > div {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #e9efec;
+  color: #213b3e;
+}
+.process-grid strong,
+.process-grid span {
+  display: block;
+}
+.process-grid span {
+  margin-top: 0.5rem;
+}
+.record-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: #3d5c62;
+}
+.preserve-lines {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.individual-note {
+  border-left: 3px solid #8ba6a0;
+  padding: 0.7rem 1rem;
+  margin: 1rem 0;
+}
+.concern {
+  padding: 1rem;
+  border-left: 4px solid #927346;
+  background: #f7f1e6;
+  margin: 1rem 0;
+}
+.concern.material {
+  border-color: #a64233;
+  background: #faece9;
+}
+.warning-text {
+  color: #854224;
+  font-weight: 600;
+}
+.template-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.82rem;
+  max-height: 28rem;
+  overflow: auto;
+  background: #fff;
+  padding: 1rem;
+  border: 1px solid #cbd2d7;
+}
+.review-criterion {
+  padding: 1.4rem;
+  background: #fff;
+  border: 1px solid #cbd2d7;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.8rem;
+}
+.review-criterion h2 {
+  margin: 0;
+}
+.review-criterion p {
+  margin: 0 0 0.4rem;
+}
+.evidence-list li {
+  margin: 1rem 0;
+}
+.evidence-list a {
+  display: block;
+  margin-top: 0.25rem;
+}
+.file-label {
+  padding: 1.25rem;
+  background: #edf2f0;
+  border: 1px dashed #72928a;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+}
+.file-label input {
+  font-weight: 400;
+  max-width: 100%;
+}
+.review-workspace {
+  max-width: 62rem;
+}
+@media (max-width: 800px) {
+  .collab-steps,
+  .process-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .collab-steps,
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+  .collab-card,
+  .collab-details,
+  .review-criterion {
+    padding: 1rem;
+  }
+}
+@media print {
+  .collab-form,
+  .file-label,
+  .collab-details > form {
+    display: none;
+  }
+  .collab-card,
+  .decision-record,
+  .concern,
+  .review-criterion {
+    break-inside: avoid;
+  }
+}
+
 /* Expanded workbook tools retain the printed-handbook rhythm. */
 .sample-invitation {
   padding: 1.5rem 0 2.5rem;

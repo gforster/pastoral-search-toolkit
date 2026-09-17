@@ -8,6 +8,8 @@ A free, open-source pastoral-transition and search workbook for small churches, 
 
 Choose **Explore a Sample Search** to try a labeled, temporary example. Duplicate it only when you want to create a saved local project. The GitHub Pages publication is a feedback preview; it can be disabled in repository Pages settings without removing the repository.
 
+The public/static version supports local projects and portable committee reviews. A future optional **Committee Workspace** is planned, but no cloud account is required for the core toolkit.
+
 <!-- Screenshot placeholder: a current landing/dashboard screenshot can be added here after editorial review. Browser checks produce local screenshots in test-results/. Never publish private church projects. -->
 
 ## What it does
@@ -20,6 +22,19 @@ Choose **Explore a Sample Search** to try a labeled, temporary example. Duplicat
 - Generates **43 templates** across working documents, candidate and congregation handouts, and reference guides. Relevant optional documents appear when enabled. Every draft remains useful with truthful placeholders; approval requires an explicit human record.
 - Exports Markdown, standalone printable HTML, whole-project JSON, and a structured ZIP with documents and backup. Use browser printing for PDF.
 - Autosaves projects in **IndexedDB**, with rename, duplicate, confirmed deletion, old-backup migration, corrupt-record recovery, and stale-tab conflict protection.
+- Separates shared church facts, candidate records, individual observations, committee decisions and assigned work. Members can review independently, return small JSON files, and discuss a compilation that preserves minority concerns without scoring candidates.
+
+## Manual committee workflow
+
+1. Chair opens **Committee work & candidates**, adds members and a candidate, and creates a review round with selected evidence and expected reviewers.
+2. Chair downloads a **Review Packet** for each recipient. Packets contain assignment context, not the entire church project or anyone else's review.
+3. Member opens **Individual reviews**, imports the packet, enters a self-identified name, completes the review and downloads **Completed Review**. Drafts save locally; nothing is sent automatically. A printable worksheet supports paper participation.
+4. Chair imports the returned files together, handles duplicates or stale criteria explicitly, closes submissions and releases the compilation for discussion.
+5. The committee considers original observations, questions, divergent responses and every material concern. The chair records its actual decision and any follow-up assignment.
+
+Sermon, materials, interview, qualification-evidence and general reviews are available. Qualification reviews use the church's adopted definitions. Round snapshots preserve what each reviewer saw. Submission counts are not attendance, quorum, votes or a candidate score. Local release controls guide the workflow; they are not authenticated security or encryption.
+
+See the [architecture](docs/collaboration-architecture.md), [practice checklist](docs/collaboration-battle-test.md) and [Committee Workspace roadmap](docs/roadmap-collaboration.md).
 
 It does not choose a pastor, replace Scripture or prayer, override governing documents, give legal advice, conduct background checks, or centrally store candidate data. Readiness means recorded prerequisites, not independent verification or permission to act.
 
@@ -28,6 +43,8 @@ It does not choose a pastor, replace Scripture or prayer, override governing doc
 No account, central project database, analytics, advertising, remote fonts, or automatic project upload. The static host may log ordinary page requests. Data stays in this browser profile and origin; **it is not encrypted or cloud-backed up**.
 
 Use **Download Project Backup** periodically. Clearing browser data can remove projects. Imports make separate copies, not synchronized committee workspaces. The full ZIP includes private project data and internal documents; share only reviewed handouts with the intended audience. Keep candidate dossiers, allegations, background reports, passwords, donor records, and private care histories in appropriate secure systems outside the toolkit. See [Privacy](docs/privacy.md) and [Security](SECURITY.md).
+
+Full backups containing collaboration records have a private-export warning. Reusable church-template exports exclude candidates, reviews, decisions and transition-specific fields; review the remaining free text before reuse. Ordinary candidate/congregation handouts never draw from individual review records. Review packets, completed reviews and internal meeting sheets have their own narrow audiences.
 
 ## Run locally
 
@@ -63,6 +80,7 @@ No application backend, database service, account server, or API key is required
 | `src/domain/` | Readiness, tasks, review invalidation, backup and template boundaries |
 | `src/content/` | Modules, Scripture references, questions, guidance and suggested presets |
 | `src/storage/` | Transactional IndexedDB persistence and legacy recovery |
+| `src/collaboration/` | Local chair workflow, independent reviewer UI, import resolution |
 | `src/artifacts/` | Shared templates, audience boundaries, HTML and ZIP rendering |
 | `src/app.js`, `src/views.js`, `src/styles.css` | Browser interaction and accessible responsive presentation |
 | `examples/` | Sanitized Fellowship-inspired worked example |
@@ -89,13 +107,13 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-With installed Chrome, use `CHROME_CHANNEL=chrome npm run test:browser`. The browser suite starts a temporary static server, tests the production build under a subpath, and checks persistence, unknowns, exports, sample isolation, project management, keyboard setup, mobile layouts, accessibility and recovery. Test screenshots and print samples remain ignored under `test-results/`.
+With installed Chrome, use `CHROME_CHANNEL=chrome npm run test:browser`. Both workbook and collaboration journeys run against a temporary static server under a repository subpath. Checks include independent offline review, packet/returned-review downloads, six-of-seven participation, minority concerns, duplicates/mismatches, stale snapshots, actual decisions and follow-up, sensitive backups, sanitized templates, persistence, accessibility and mobile layouts. Test screenshots remain ignored under `test-results/`. Run `npm run test:collaboration` or `npm run test:browser:collaboration` for focused checks.
 
 See [Validation](docs/validation.md) for results actually run, [Contributing](CONTRIBUTING.md), and the issue/PR templates. Pastoral/theological review is still needed for generalized qualification labels, adapted source questions, polity/preset language, and pastoral guidance. Legal/financial/safety wording needs appropriate professional review for each church; tests do not validate those judgments.
 
 ## Intentional next steps
 
-DOCX and dedicated PDF output, secure optional collaboration, a separately designed local/encrypted candidate workspace, document-assisted workflows with human confirmation, more declared fellowship/polity presets, localization and sanitized cycle archival remain [roadmap](docs/roadmap.md) work. No candidate marketplace, automated pastoral recommendation, or AI scoring is planned for this MVP.
+DOCX and dedicated PDF output, an optional authenticated Committee Workspace, encrypted attachments, document-assisted workflows with human confirmation, more declared fellowship/polity presets, localization and cycle archival remain [roadmap](docs/roadmap.md) work. No candidate marketplace, automated pastoral recommendation or AI scoring is planned.
 
 ## License
 

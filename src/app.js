@@ -18,6 +18,8 @@ import {
   validateProject,
 } from './domain.js';
 import { ProjectStore, PREFIX } from './storage.js';
+import { createCollaborationUI } from './collaboration/controller.js';
+import { sensitiveProject, SENSITIVE_NOTICE } from './domain/collaboration.ts';
 import { makeDocument, documentMarkdown, standaloneHtml, generatePackage } from './documents.js';
 import {
   homeView,
@@ -37,6 +39,7 @@ const cache = new Map(),
   saveErrors = new Map(),
   unsavedIds = new Set();
 let store,
+  collaborationUI,
   current = null,
   draft = null,
   draftPath = '',
@@ -195,6 +198,8 @@ function render(focus = false) {
       const ps = projects();
       view = projectsView(ps.projects, ps.errors);
     } else if (parts[0] === 'about') view = aboutView();
+    else if (parts[0] === 'reviews' || parts[0] === 'review')
+      view = collaborationUI.reviewView(parts);
     else if (parts[0] === 'new') {
       const path = PATHS.some((p) => p[0] === parts[1]) ? parts[1] : 'sudden';
       if (!draft || draftPath !== path) {
@@ -216,6 +221,7 @@ function render(focus = false) {
       else if (section === 'module') view = moduleView(current, moduleId);
       else if (section === 'tasks') view = tasksView(current, parts[3]);
       else if (section === 'documents') view = documentsView(current, parts[3]);
+      else if (section === 'committee-work') view = collaborationUI.projectView(current, parts);
       else throw new Error('That page is not part of this workbook.');
     } else throw new Error('That page could not be found.');
   } catch (err) {
@@ -223,8 +229,9 @@ function render(focus = false) {
     shell = false;
   }
   document.title = `${current ? current.name + ' · ' : ''}Pastoral Search Toolkit`;
-  app.innerHTML = `<header class="site-header"><a class="brand" href="#home"><img src="./favicon.svg" alt="" width="36" height="36"><span>Pastoral Search<span class="brand-sub">TOOLKIT</span></span></a><nav aria-label="Main"><span id="save-indicator" class="save-indicator"></span><a href="#projects">Open a project</a><a href="#about">About the toolkit</a></nav></header><div id="feedback" class="feedback"></div>${current?.id === SAMPLE_ID ? `<aside class="sample-banner"><strong>Sample search — temporary exploration.</strong> These source-derived and fictional values are not your church’s decisions.<button class="button" data-duplicate="${SAMPLE_ID}">Use this example as a starting point</button></aside>` : ''}${shell ? `<div class="mobile-project-bar"><button class="button" data-toggle-nav aria-expanded="false" aria-controls="project-navigation">Workbook navigation</button><button class="text-button" data-export>Backup</button></div><div class="workspace">${sidebar(current, section, moduleId)}<main id="main" class="project-main ${section === 'documents' && parts[3] ? 'document-main' : ''}" tabindex="-1">${view}</main></div>` : view}<footer class="site-footer"><span>Feedback preview · Independent Fundamental Baptist roots</span><a href="https://github.com/gforster/pastoral-search-toolkit/issues/new" target="_blank" rel="noopener noreferrer">Give feedback ↗</a><a href="https://github.com/gforster/pastoral-search-toolkit" target="_blank" rel="noopener noreferrer">Free & open source ↗</a></footer><dialog id="confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-content"><h2 id="confirm-title"></h2><p id="confirm-description"></p><div class="actions"><button class="button" data-cancel-dialog>Cancel</button><button class="button danger-button" id="confirm-action">Confirm</button></div></div></dialog>`;
+  app.innerHTML = `<header class="site-header"><a class="brand" href="#home"><img src="./favicon.svg" alt="" width="36" height="36"><span>Pastoral Search<span class="brand-sub">TOOLKIT</span></span></a><nav aria-label="Main"><span id="save-indicator" class="save-indicator"></span><a href="#projects">Open a project</a><a href="#reviews">Individual reviews</a><a href="#about">About the toolkit</a></nav></header><div id="feedback" class="feedback"></div>${current?.id === SAMPLE_ID ? `<aside class="sample-banner"><strong>Sample search — temporary exploration.</strong> These source-derived and fictional values are not your church’s decisions.<button class="button" data-duplicate="${SAMPLE_ID}">Use this example as a starting point</button></aside>` : ''}${shell ? `<div class="mobile-project-bar"><button class="button" data-toggle-nav aria-expanded="false" aria-controls="project-navigation">Workbook navigation</button><button class="text-button" data-export>Backup</button></div><div class="workspace">${sidebar(current, section, moduleId)}<main id="main" class="project-main ${section === 'documents' && parts[3] ? 'document-main' : ''}" tabindex="-1">${view}</main></div>` : view}<footer class="site-footer"><span>Feedback preview · Independent Fundamental Baptist roots</span><a href="https://github.com/gforster/pastoral-search-toolkit/issues/new" target="_blank" rel="noopener noreferrer">Give feedback ↗</a><a href="https://github.com/gforster/pastoral-search-toolkit" target="_blank" rel="noopener noreferrer">Free & open source ↗</a></footer><dialog id="confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-content"><h2 id="confirm-title"></h2><p id="confirm-description"></p><div class="actions"><button class="button" data-cancel-dialog>Cancel</button><button class="button danger-button" id="confirm-action">Confirm</button></div></div></dialog>`;
   updateFeedback();
+  collaborationUI?.afterRender();
   if (focus) {
     document.querySelector('#main')?.focus({ preventScroll: true });
     window.scrollTo(0, 0);
@@ -258,8 +265,21 @@ function exportProject() {
     notify('Open a project before exporting its backup.');
     return;
   }
-  download(serializeBackup(p), `${safeName(p.name)}-${new Date().toISOString().slice(0, 10)}.json`);
-  notify('Backup downloaded. Keep it somewhere secure; it contains your complete workbook.');
+  const perform = () => {
+    download(
+      serializeBackup(p),
+      `${safeName(p.name)}-${new Date().toISOString().slice(0, 10)}.json`,
+    );
+    notify('Backup downloaded. Keep it somewhere secure; it contains your complete workbook.');
+  };
+  if (sensitiveProject(p))
+    confirmAction(
+      'Export private search backup?',
+      SENSITIVE_NOTICE,
+      'Download private backup',
+      perform,
+    );
+  else perform();
 }
 function confirmAction(title, description, button, action) {
   const dialog = document.querySelector('#confirm-dialog');
@@ -340,7 +360,7 @@ app.addEventListener('change', async (event) => {
       const file = el.files[0];
       if (!file) return;
       if (file.size > MAX_BACKUP_BYTES)
-        throw new Error('Choose a project JSON backup smaller than 2 MB.');
+        throw new Error('Choose a project JSON backup smaller than 10 MB.');
       const imported = importBackup(await file.text());
       await save(imported);
       location.hash = `project/${imported.id}/dashboard`;
@@ -388,6 +408,7 @@ app.addEventListener('change', async (event) => {
       const t = p.tasks.find((t) => t.id === el.dataset.resolveTask);
       if (t) {
         t.resolved = el.checked;
+        if (t.status) t.status = el.checked ? 'done' : 'open';
         recordChange('call');
         render();
         notify(
@@ -487,6 +508,7 @@ app.addEventListener('click', async (event) => {
       copy.revision = 0;
       copy.name = copy.name.slice(0, 988) + ' (copy)';
       copy.artifactReviews = {};
+      if (original.id === SAMPLE_ID) collaborationUI.resetSample(copy);
       await save(copy);
       location.hash = `project/${copy.id}/dashboard`;
       render();
@@ -562,16 +584,21 @@ app.addEventListener('click', async (event) => {
       notify('Printable HTML downloaded. It opens without the toolkit.');
     }
     if (d.zip !== undefined) {
-      button.disabled = true;
-      try {
+      const perform = () => {
         const bytes = generatePackage(p);
         download(bytes, `${safeName(p.name)}-search-packet.zip`, 'application/zip');
-      } finally {
-        button.disabled = false;
-      }
-      notify(
-        'Full working package downloaded, including the private project backup. Share only reviewed handouts with the intended audience.',
-      );
+        notify(
+          'Full working package downloaded, including the private project backup. Share only reviewed handouts with the intended audience.',
+        );
+      };
+      if (sensitiveProject(p))
+        confirmAction(
+          'Export the full private working packet?',
+          SENSITIVE_NOTICE + ' The ZIP includes the complete project backup.',
+          'Download private packet',
+          perform,
+        );
+      else perform();
     }
     if (d.approveArtifact) {
       const record = document.getElementById('artifact-approval').value.trim();
@@ -723,6 +750,21 @@ window.addEventListener('beforeunload', (event) => {
     event.preventDefault();
     event.returnValue = '';
   }
+});
+collaborationUI = await createCollaborationUI({
+  app,
+  projectStore: store,
+  getProject: active,
+  saveProject: save,
+  render,
+  notify,
+  download,
+  confirmAction,
+  setUnsaved(id, value) {
+    if (value) unsavedIds.add(id);
+    else unsavedIds.delete(id);
+    unsaved = unsavedIds.size > 0;
+  },
 });
 render();
 

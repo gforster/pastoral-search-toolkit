@@ -146,7 +146,7 @@ test('v1 migrates without guessing governance or mutating the source; future ver
   const legacy = legacyProject();
   legacy.answers.quorum = { status: 'unknown', value: '' };
   const copy = migrateProject(legacy);
-  assert.equal(copy.schemaVersion, 2);
+  assert.equal(copy.schemaVersion, 3);
   assert.equal(legacy.schemaVersion, 1);
   assert.deepEqual(copy.answers, legacy.answers);
   assert.equal(copy.answers.callMethod, undefined);
@@ -154,7 +154,7 @@ test('v1 migrates without guessing governance or mutating the source; future ver
   const imported = importBackup(
     JSON.stringify({ format: 'pastoral-search-toolkit', schemaVersion: 1, project: legacy }),
   );
-  assert.equal(imported.schemaVersion, 2);
+  assert.equal(imported.schemaVersion, 3);
 });
 test('ZIP contains independent print HTML, Markdown, private backup and provenance; excludes irrelevant tools', () => {
   const p = scenario('A');
@@ -228,7 +228,7 @@ test('IndexedDB migration retains originals, reports damage, and never resurrect
   legacy.setItem(PREFIX + p.id, JSON.stringify(p));
   legacy.setItem(PREFIX + 'broken', '{broken');
   let store = await ProjectStore.open(indexedDB, legacy);
-  assert.equal(store.load(p.id).schemaVersion, 2);
+  assert.equal(store.load(p.id).schemaVersion, 3);
   assert.deepEqual(store.list().errors, ['broken']);
   assert.equal(store.recoverRaw('broken'), '{broken');
   assert(legacy.getItem(PREFIX + p.id));

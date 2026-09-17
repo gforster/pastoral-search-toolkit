@@ -20,10 +20,13 @@ export class ProjectStore {
     this.legacyErrors = new Map();
   }
   static async open(indexedDB, legacyStorage, databaseName = DATABASE) {
-    const request = indexedDB.open(databaseName, 1);
+    const request = indexedDB.open(databaseName, 2);
     request.onupgradeneeded = () => {
-      request.result.createObjectStore('projects', { keyPath: 'id' });
-      request.result.createObjectStore('meta');
+      for (const name of ['projects', 'reviewWork'])
+        if (!request.result.objectStoreNames.contains(name))
+          request.result.createObjectStore(name, { keyPath: 'id' });
+      if (!request.result.objectStoreNames.contains('meta'))
+        request.result.createObjectStore('meta');
     };
     const db = await requestResult(request),
       store = new ProjectStore(db);

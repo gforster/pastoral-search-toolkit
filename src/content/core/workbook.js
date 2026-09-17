@@ -1,6 +1,6 @@
 import { SOURCE_QUESTIONS } from './questions.js';
 /** Content is declarative so church-specific decisions never become hidden defaults. */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 export const AUTHORITY_NOTICE =
   'Your constitution, bylaws, adopted doctrine, and applicable law govern your church. This toolkit cannot override them.';
 export const MILESTONES = [

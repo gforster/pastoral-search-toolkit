@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — 2026-09-17
+
+- Add a local committee directory, separate candidate records, evidence references and process progress.
+- Add independent sermon, materials, interview, qualification and general reviews with fixed assignment snapshots, portable packets and completed-review files.
+- Compile participation, original observations, exact matching questions, divergent findings and every material concern without scoring or ranking candidates.
+- Detect duplicate/revised submissions, wrong searches/candidates/rounds, stale criteria and late reviews; retain previous revisions after explicit replacement.
+- Record actual committee decisions and lightweight follow-up assignments; keep individual observations separate from shared facts and church approvals.
+- Add printable review worksheets, private candidate meeting sheets and previewed reusable-template exports; protect external handouts from individual review data.
+- Migrate project schema v1/v2 to v3 and upgrade IndexedDB with a separate reviewer-draft store; retain static, account-free operation and offline work after loading.
+- Document the optional future Committee Workspace, security boundaries and real-committee battle test; test the full chair/reviewer workflow alongside existing workbook checks.
+
 ## 0.2.0 — 2026-09-17
 
 - Add the continuation’s process policies, four optional/contextual modules, and 43 document templates.
