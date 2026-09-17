@@ -15,7 +15,7 @@ The project's Independent Fundamental Baptist origin is stated in the product an
 | 1 Timothy 3 and Titus 1 qualification worksheet | BIBLICAL_FRAMEWORK | References and church-authored working definitions |
 | 26 expressions in Working 02 | BIBLICAL_FRAMEWORK | Preserve source order and references; retain open interpretations and four working-definition prompts |
 | Husband of one wife, children, novice, faithful children | CONFIGURABLE | Surface interpretive questions; never silently settle them |
-| KJV convention | CONFIGURABLE | KJV references/short phrases in initial framework; do not imply a universal church translation policy |
+| Bible translation practice | CONFIGURABLE | A church-owned conviction; no particular translation is prescribed by the toolkit |
 | Church's adopted doctrinal statement | CONFIGURABLE | Enter existing text; identify requested affirmations; never generate doctrine |
 | Committee creation, membership, deacon/elder roles | CONFIGURABLE | Explicit authority and process fields; no automatic membership |
 | Candidate advancement, finalist recommendation, final call authority | CONFIGURABLE | Church supplies source and rule |
@@ -74,7 +74,7 @@ All 21 supplied documents were retrieved for this review. Outputs are newly auth
 - **Timing:** a spring 2027 departure, 48-year pastorate, quiet fall, January preparation and deliberate interval belong to the source situation. The reusable reason is to honor current leadership, allow adjustment, distinguish preparation from candidate activity, and resist urgency-driven decisions.
 - **Interim:** R03 says the constitution neither expressly permits nor prohibits an interim and does not define the role. Its recommendation-and-congregational-vote procedure is explicitly an **adopted safeguard**, not an existing constitutional mandate. The app requires each church to document its own authority and limits.
 - **Associate:** named employment, current deacon term, personal non-candidacy, voluntary recusals, willingness to serve part-time, and planned resignation are excluded. Transferable principles are disclosure, recusal, appropriate information access, realistic workload, and honest candidate-facing expectations.
-- **Convictions:** KJV preaching, non-Reformed theology, traditional music, education and cooperation positions are not preselected as universal doctrine. The framework uses KJV expressions because the user asked for that convention, while church translation practice remains a church-owned topic.
+- **Convictions:** Bible translation practice, non-Reformed theology, traditional music, education and cooperation positions are not preselected as universal doctrine. These remain church-owned topics.
 
 ## Difficult decisions and follow-up
 
@@ -82,7 +82,7 @@ All 21 supplied documents were retrieved for this review. Outputs are newly auth
 2. **Governance versus good practice:** committee structure, thresholds and pastoral authority have no universal defaults. Suggested safeguards must be adopted under the church's authority.
 3. **Compensation versus readiness:** early discussion can proceed with honest disclosure, but serious advancement needs meaningful information and presenting a finalist requires approved terms.
 4. **Readiness versus permission:** filling fields cannot authorize a meeting or certify a candidate. Explicit human verification is retained at final stages.
-5. **Count and Scripture wording:** retain Working 02’s 26 entries and references, without claiming a uniquely mandatory enumeration. Use the KJV wording for entry 21; do not present the source’s explanatory alternative “that which is good” as a KJV quotation.
+5. **Qualification framework:** retain Working 02’s 26 entries and references, without claiming a uniquely mandatory enumeration. Working definitions and interpretive decisions remain church-owned.
 6. **Sensitive records:** the toolkit generates an evaluation worksheet but does not store candidate allegations, background reports or a ranking database.
 
 7. **Scoring conflict:** Working 05 contains a 100-point weighted rubric, including character and doctrine categories, despite warnings that gates cannot be averaged away. The user expressly rejects candidate scoring. The app retains the gate/evidence/concern/decision structure and removes ratings, weights, totals and numerical advancement thresholds.

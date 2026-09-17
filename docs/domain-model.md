@@ -44,7 +44,7 @@ A `Requirement` has a category, statement, working definition/evidence, and a ch
 | Ministry fit | Responsibilities and context, assessed with evidence |
 | Personal preference | Acknowledged preference, never silently promoted |
 
-The twenty-six qualification worksheet entries follow the supplied Fellowship working document 02, including its order and passage references. This is that source’s enumeration, not a claim that every church must count expressions identically. Entry 21 uses the KJV phrase “A lover of good men” rather than the source’s explanatory alternative. Interpretive questions remain open until the church supplies its understanding. All four prompts—meaning, evidence, disqualifying pattern, and difficult cases—must be recorded before adoption can satisfy active-search readiness.
+The twenty-six qualification worksheet entries follow the supplied Fellowship working document 02, including its order and passage references. This is that source’s enumeration, not a claim that every church must count expressions identically. Interpretive questions remain open until the church supplies its understanding. All four prompts—meaning, evidence, disqualifying pattern, and difficult cases—must be recorded before adoption can satisfy active-search readiness.
 
 ## Readiness and actionable uncertainty
 
