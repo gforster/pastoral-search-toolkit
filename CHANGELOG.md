@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1 — 2026-09-17
+
+- Make required items explicit across all 19 workbook modules, with named checklists at the top and bottom, persistent inline explanations, and color plus text indicators.
+- Scroll to and focus the first unresolved item when module review is blocked; open collapsed qualification prompts and explain cross-field prerequisites.
+- Update feedback as answers change, distinguish unknown answers from recorded decisions that still need action, and clear outdated completion messages.
+- Add regression coverage for every module, conditional requirements, keyboard navigation, mobile feedback and accessibility.
+
 ## 0.3.0 — 2026-09-17
 
 - Add a local committee directory, separate candidate records, evidence references and process progress.

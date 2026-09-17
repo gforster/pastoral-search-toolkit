@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { setTimeout as delay } from 'node:timers/promises';
 import { MODULES } from '../src/data.js';
 import { DOCUMENTS } from '../src/documents.js';
+import { testReviewFeedback } from './review-feedback-browser.mjs';
 const output = 'test-results';
 await mkdir(output, { recursive: true });
 const port = Number(process.env.TEST_PORT || 4187),
@@ -427,6 +428,7 @@ try {
   console.log(
     'PASS keyboard-only setup, unavailable storage backup recovery, legacy migration, and invalid import',
   );
+  await testReviewFeedback(browser, url, output);
   assert.deepEqual(errors, [], 'No uncaught browser errors');
   assert.deepEqual(network, [], 'No external runtime requests');
   console.log(

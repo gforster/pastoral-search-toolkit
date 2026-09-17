@@ -185,14 +185,17 @@ export function setAnswer(p, id, value, status = 'known') {
   p.updatedAt = now();
   return p;
 }
-export function reviewModule(p, id) {
-  if (!MODULES.some((m) => m.id === id)) throw new Error('Unknown module.');
-  const missing = FIELDS.filter(
+export function moduleReviewMissing(p, id) {
+  return FIELDS.filter(
     (f) => f.module === id && applicable(p, f) && f.due !== null && !resolved(p, f),
   );
+}
+export function reviewModule(p, id) {
+  if (!MODULES.some((m) => m.id === id)) throw new Error('Unknown module.');
+  const missing = moduleReviewMissing(p, id);
   if (missing.length)
     throw new Error(
-      `Resolve this module’s ${missing.length} required item${missing.length === 1 ? '' : 's'} before marking it reviewed. You can leave it in progress and work elsewhere.`,
+      `Before marking this module reviewed, resolve: ${missing.map((f) => f.label).join('; ')}. You can leave it in progress and work elsewhere.`,
     );
   p.reviews[id] = { at: now(), stale: false };
   p.updatedAt = now();

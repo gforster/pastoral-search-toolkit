@@ -20,6 +20,11 @@ import {
 import { ProjectStore, PREFIX } from './storage.js';
 import { createCollaborationUI } from './collaboration/controller.js';
 import { sensitiveProject, SENSITIVE_NOTICE } from './domain/collaboration.ts';
+import {
+  moduleReviewIssues,
+  focusReviewTarget,
+  syncModuleReviewFeedback,
+} from './review-feedback.js';
 import { makeDocument, documentMarkdown, standaloneHtml, generatePackage } from './documents.js';
 import {
   homeView,
@@ -37,7 +42,8 @@ const app = document.querySelector('#app'),
   announcer = document.querySelector('#announcer');
 const cache = new Map(),
   saveErrors = new Map(),
-  unsavedIds = new Set();
+  unsavedIds = new Set(),
+  reviewAttempts = new Set();
 let store,
   collaborationUI,
   current = null,
@@ -232,14 +238,19 @@ function render(focus = false) {
   app.innerHTML = `<header class="site-header"><a class="brand" href="#home"><img src="./favicon.svg" alt="" width="36" height="36"><span>Pastoral Search<span class="brand-sub">TOOLKIT</span></span></a><nav aria-label="Main"><span id="save-indicator" class="save-indicator"></span><a href="#projects">Open a project</a><a href="#reviews">Individual reviews</a><a href="#about">About the toolkit</a></nav></header><div id="feedback" class="feedback"></div>${current?.id === SAMPLE_ID ? `<aside class="sample-banner"><strong>Sample search — temporary exploration.</strong> These source-derived and fictional values are not your church’s decisions.<button class="button" data-duplicate="${SAMPLE_ID}">Use this example as a starting point</button></aside>` : ''}${shell ? `<div class="mobile-project-bar"><button class="button" data-toggle-nav aria-expanded="false" aria-controls="project-navigation">Workbook navigation</button><button class="text-button" data-export>Backup</button></div><div class="workspace">${sidebar(current, section, moduleId)}<main id="main" class="project-main ${section === 'documents' && parts[3] ? 'document-main' : ''}" tabindex="-1">${view}</main></div>` : view}<footer class="site-footer"><span>Feedback preview · Independent Fundamental Baptist roots</span><a href="https://github.com/gforster/pastoral-search-toolkit/issues/new" target="_blank" rel="noopener noreferrer">Give feedback ↗</a><a href="https://github.com/gforster/pastoral-search-toolkit" target="_blank" rel="noopener noreferrer">Free & open source ↗</a></footer><dialog id="confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-content"><h2 id="confirm-title"></h2><p id="confirm-description"></p><div class="actions"><button class="button" data-cancel-dialog>Cancel</button><button class="button danger-button" id="confirm-action">Confirm</button></div></div></dialog>`;
   updateFeedback();
   collaborationUI?.afterRender();
+  updateModuleReviewFeedback();
   if (focus) {
     document.querySelector('#main')?.focus({ preventScroll: true });
     window.scrollTo(0, 0);
   }
   if (field && FIELD_MAP[field] && focus) {
-    document.getElementById(`item-${field}`)?.scrollIntoView({ block: 'center' });
-    document.getElementById(`field-${field}`)?.focus({ preventScroll: true });
+    focusReviewTarget(`field-${field}`);
   }
+}
+function updateModuleReviewFeedback() {
+  const p = active(),
+    moduleId = document.querySelector('[data-module-review]')?.dataset.moduleReview;
+  if (p && moduleId) syncModuleReviewFeedback(p, reviewAttempts.has(`${p.id}/${moduleId}`));
 }
 function download(text, name, type = 'application/json') {
   const url = URL.createObjectURL(new Blob([text], { type })),
@@ -302,9 +313,15 @@ function updateAnswerControl(id) {
     a = p.answers[id],
     f = FIELD_MAP[id],
     label = document.querySelector(`[data-status-for="${id}"]`);
+  const issue = document.querySelector('[data-module-review]')
+    ? moduleReviewIssues(p, f.module).find(
+        (issue) => issue.fieldId === id || issue.targetId === `field-${id}`,
+      )
+    : null;
   if (label)
-    label.textContent =
-      a?.status === 'not_applicable'
+    label.textContent = issue
+      ? 'Required · needs attention'
+      : a?.status === 'not_applicable'
         ? 'Not applicable'
         : resolved(p, f)
           ? 'Recorded'
@@ -316,6 +333,7 @@ function handleEdit(el) {
   const p = active();
   if (!p) return;
   try {
+    message = '';
     if (el.dataset.field) {
       const id = el.dataset.field;
       setAnswer(p, id, el.value, el.value ? 'known' : 'unknown');
@@ -340,6 +358,8 @@ function handleEdit(el) {
         recordChange('convictions');
       }
     }
+    updateFeedback();
+    updateModuleReviewFeedback();
   } catch (err) {
     notify(err.message);
   }
@@ -428,6 +448,10 @@ app.addEventListener('click', async (event) => {
   const d = button.dataset,
     p = active();
   try {
+    if (d.reviewTarget) {
+      focusReviewTarget(d.reviewTarget);
+      return;
+    }
     if (d.dismiss !== undefined) {
       message = '';
       updateFeedback();
@@ -638,7 +662,17 @@ app.addEventListener('click', async (event) => {
       notify('Current focus changed. This does not mark earlier work complete.');
     }
     if (d.review) {
+      const issues = moduleReviewIssues(p, d.review);
+      if (issues.length) {
+        message = '';
+        updateFeedback();
+        reviewAttempts.add(`${p.id}/${d.review}`);
+        updateModuleReviewFeedback();
+        focusReviewTarget(issues[0].targetId);
+        return;
+      }
       reviewModule(p, d.review);
+      reviewAttempts.delete(`${p.id}/${d.review}`);
       save();
       render();
       notify('Module reviewed. Changes to related information will prompt another review.');

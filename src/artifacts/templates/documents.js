@@ -680,7 +680,7 @@ export function makeDocument(p, id) {
     includeStatus: p.artifactOptions.includeStatus,
     approval: review?.record || '',
     provenance: {
-      applicationVersion: '0.3.0',
+      applicationVersion: '0.3.1',
       schemaVersion: p.schemaVersion,
       templateVersion: '2026-09-17.2',
       projectUpdatedAt: p.updatedAt,

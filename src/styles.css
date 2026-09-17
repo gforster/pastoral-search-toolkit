@@ -632,6 +632,71 @@
     font-size: 0.8125rem;
     flex-shrink: 0;
   }
+  .due-tag strong {
+    color: var(--ink);
+  }
+  .review-summary {
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--green);
+    border-radius: 4px;
+    background: #eff7f1;
+  }
+  .review-summary h2 {
+    font-size: 1.25rem;
+    margin: 0 0 0.6rem;
+  }
+  .review-summary p {
+    margin: 0.35rem 0;
+    font-size: 0.9rem;
+  }
+  .review-summary ul {
+    margin: 1rem 0 0;
+    padding-left: 1.25rem;
+  }
+  .review-summary li + li {
+    margin-top: 0.8rem;
+  }
+  .review-summary .text-button {
+    text-align: left;
+    font-weight: 700;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+  }
+  .review-summary.has-missing,
+  .required-missing {
+    background: #fff8eb;
+    border-left: 5px solid var(--amber);
+  }
+  .field-card.required-missing,
+  .qualification-prompt.required-missing {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .review-summary.review-attempted,
+  .required-missing.review-attempted {
+    background: #fff3f1;
+    border-left-color: var(--red);
+  }
+  .field-review-message {
+    color: var(--amber);
+    font-size: 0.9rem;
+    margin: 0.65rem 0;
+  }
+  .review-attempted .field-review-message,
+  .review-attempted .field-status {
+    color: var(--red);
+  }
+  .field-card [aria-invalid='true'],
+  .qualification-prompt [aria-invalid='true'] {
+    border: 2px solid var(--red);
+  }
+  .qualification-prompt {
+    padding: 0.7rem 0;
+    margin-bottom: 0.8rem;
+    scroll-margin-top: 5rem;
+  }
   .field-help {
     font-size: 0.9rem;
     color: var(--muted);
