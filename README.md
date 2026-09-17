@@ -1,84 +1,101 @@
 # Pastoral Search Toolkit
 
-A free, open-source workbook for small churches navigating pastoral transition and a pastoral search.
+A free, open-source pastoral-transition and search workbook for small churches, especially those without denominational or professional transition support.
 
-**Your pastor is leaving. You do not have to invent the process from scratch.**
+**What can we do now? What must we decide next? What can safely wait—and why?**
 
-[Open the public feedback preview](https://gforster.github.io/pastoral-search-toolkit/) · [Report a problem or suggest an improvement](https://github.com/gforster/pastoral-search-toolkit/issues/new)
+[Open the public feedback preview](https://gforster.github.io/pastoral-search-toolkit/) · [Give feedback](https://github.com/gforster/pastoral-search-toolkit/issues/new)
 
-This GitHub Pages publication is a temporary feedback preview. You can turn it off in the repository’s Pages settings without removing the source repository.
+Choose **Explore a Sample Search** to try a labeled, temporary example. Duplicate it only when you want to create a saved local project. The GitHub Pages publication is a feedback preview; it can be disabled in repository Pages settings without removing the repository.
 
-The toolkit helps a church answer three questions: **What can we do now? What must we resolve next? What can safely wait?** It teaches the process, keeps unresolved decisions visible, and generates working documents and audience-specific handouts. It is not an applicant tracker, a candidate-ranking system, or a formula for discerning God’s will.
+<!-- Screenshot placeholder: a current landing/dashboard screenshot can be added here after editorial review. Browser checks produce local screenshots in test-results/. Never publish private church projects. -->
 
-## Use the toolkit
+## What it does
 
-Choose a starting point, answer a short orientation, and open any module. “We don’t know yet” is a valid answer. Work is saved on this device in this browser; use **Export project backup** regularly. Import a backup to create a separate copy on another device. Print a document or use your browser’s **Save as PDF**, or download its editable Markdown.
+- Guides immediate stability, committee organization, preparation, candidate discernment, finalist/call, and handoff through **15 independent core modules** and **four optional/contextual tools**: sermon review, church self-assessment, interim ministry, and bivocational ministry.
+- Explains **seven separate readiness milestones**. Unknown compensation need not stop committee preparation; unresolved vote requirements block the relevant later stages. A confirmed alternative decision process uses its own requirements.
+- Turns unknown answers into current decisions, later requirements, recommendations, or optional work. Additional church prerequisites can be assigned an owner and milestone.
+- Keeps biblical qualifications, adopted doctrine, governance, convictions, ministry fit, and preference distinct. All 26 qualification entries retain Scripture references and church-owned definitions.
+- Provides a grouped source question bank, selected core prompts, questions from adopted convictions, custom follow-ups, and scenarios. There is no automatic candidate ranking or total score.
+- Generates **43 templates** across working documents, candidate and congregation handouts, and reference guides. Relevant optional documents appear when enabled. Every draft remains useful with truthful placeholders; approval requires an explicit human record.
+- Exports Markdown, standalone printable HTML, whole-project JSON, and a structured ZIP with documents and backup. Use browser printing for PDF.
+- Autosaves projects in **IndexedDB**, with rename, duplicate, confirmed deletion, old-backup migration, corrupt-record recovery, and stale-tab conflict protection.
 
-The application needs no account and makes no automatic upload of project data. Browser storage and exported backups are **not encrypted**. Clearing browser data can remove your work. Keep sensitive candidate files, allegations, background reports, passwords and pastoral-care records in appropriate secure systems outside this workbook. Backups are copies, not multiuser synchronization.
+It does not choose a pastor, replace Scripture or prayer, override governing documents, give legal advice, conduct background checks, or centrally store candidate data. Readiness means recorded prerequisites, not independent verification or permission to act.
 
-## What is included
+## Privacy and backups
 
-- **15 independent modules:** immediate stability, church profile, governance, committee, doctrine, biblical qualifications, convictions/fit, pastoral position, compensation, candidate process, interviews, references/safety, communication, finalist/call, and handoff.
-- **Seven readiness checks:** stabilize, organize, begin search, advance a serious candidate, present a finalist, call/vote, and handoff. Unknown compensation does not block committee formation. Unknown quorum becomes a blocker at the finalist stage.
-- **Actionable uncertainty:** blockers for the selected milestone, later requirements, recommendations, optional items, and additional church prerequisites with responsible roles.
-- **26 biblical qualification expressions:** the source worksheet’s order and references from 1 Timothy 3 and Titus 1. Each has working meaning, evidence, disqualifying-pattern and difficult-case prompts. Interpretations are church-owned.
-- **Clear categories:** biblical framework, adopted doctrine, governing authority, church convictions, ministry fit and personal preference. Conviction examples are never automatically adopted.
-- **21 generated documents:** quick reference, working sheets 01–07, handouts H00–H07, authority checklist, covenant, roles sheet, intake procedure and interview guide. Unknowns remain explicit; draft compensation never invents amounts.
-- Local project management, versioned JSON backup/import, defensive storage recovery, stale-tab detection, responsive layouts, keyboard navigation, print styles, and optional feature-detected browser-agent navigation/readiness tools.
+No account, central project database, analytics, advertising, remote fonts, or automatic project upload. The static host may log ordinary page requests. Data stays in this browser profile and origin; **it is not encrypted or cloud-backed up**.
 
-Readiness means **recorded process prerequisites**, not independent verification, legal compliance, or permission to act. Your constitution, bylaws, adopted doctrine, and applicable law govern your church. This toolkit cannot override them.
+Use **Download Project Backup** periodically. Clearing browser data can remove projects. Imports make separate copies, not synchronized committee workspaces. The full ZIP includes private project data and internal documents; share only reviewed handouts with the intended audience. Keep candidate dossiers, allegations, background reports, passwords, donor records, and private care histories in appropriate secure systems outside the toolkit. See [Privacy](docs/privacy.md) and [Security](SECURITY.md).
 
 ## Run locally
 
-Install Node.js 22 or later, then:
+Install Node.js 22.13+ (or Node 24 LTS), then:
 
 ```sh
 git clone https://github.com/gforster/pastoral-search-toolkit.git
 cd pastoral-search-toolkit
-npm start
+npm ci
+npm run dev
 ```
 
-Open the local URL printed by the server, normally `http://127.0.0.1:4173`. No package installation is required to run the application. Keep the same origin/port to access the same browser storage. Set `PORT` if needed. The included server binds to loopback for local use; use a production static server when hosting for others.
-
-Do not open `index.html` directly with `file://`; JavaScript modules need an HTTP server.
-
-## Self-host
-
-Serve the contents of **`dist/`** from any static host over HTTPS. There is no build step, backend, database, account service, API key or runtime dependency. The files in `dist/` are authored source, intentionally tracked in Git. Hash routes and relative assets support a subdirectory such as GitHub Pages.
-
-The included GitHub Pages workflow publishes `dist/` on a push to `main` or manual dispatch. In your fork, select **GitHub Actions** as the Pages source in repository settings. Tests run before deployment. Sites hosting metadata is optional and is not needed for self-hosting; remove `.openai/hosting.json` in an unrelated fork rather than reusing another owner’s Site ID.
-
-Changing the host/origin does not move browser projects. Export a backup first and import it on the new origin. The hosting provider may log ordinary page requests. The toolkit has no analytics, advertising, remote fonts, or external runtime scripts.
-
-## Source and theological origin
-
-The initial design comes from Fellowship Baptist Church’s Independent Fundamental Baptist pastoral-search package. The supplied package includes START HERE, seven working documents, eight handouts, and five reference documents. Its distinctions—gates before fit, evidence before impressions, character before charisma, and confidentiality without secrecy—shape this product.
-
-The church’s named officers, staffing intentions, calendar, committee composition, vote percentage, and meeting timing are **not** defaults. The source’s weighted candidate rubric has deliberately become an **unscored evidence worksheet**. This application does not adopt new doctrine for a church or settle disputed interpretations.
-
-Read the [source content audit](docs/source-content-audit.md), [domain model](docs/domain-model.md), and [architecture](docs/architecture.md). Original private documents and personal arrangements are not bundled in this repository. Attribution is not endorsement.
-
-## Development and verification
+For a production preview:
 
 ```sh
-npm ci
+npm run build
+npm run preview
+```
+
+Open the printed local URL. Production preview normally uses `http://127.0.0.1:4173`. Keep the same host/port to access the same browser projects. Do not open the entrypoint directly with `file://`.
+
+## Deploy
+
+Serve generated **`dist/`** on an HTTPS static host. GitHub Actions performs clean install, formatting, lint, strict schema typecheck, unit tests, build, and Playwright checks before publishing Pages on `main`. Select **GitHub Actions** as the Pages source in a fork. Relative assets and hash routes support repository subpaths, which the browser suite explicitly tests.
+
+No application backend, database service, account server, or API key is required. Changing origins requires exporting and importing projects. See [Deployment](docs/deployment.md).
+
+## Repository map
+
+| Location | Responsibility |
+| --- | --- |
+| `src/schema/` | TypeScript/Zod project and reusable-template schemas; migrations |
+| `src/domain/` | Readiness, tasks, review invalidation, backup and template boundaries |
+| `src/content/` | Modules, Scripture references, questions, guidance and suggested presets |
+| `src/storage/` | Transactional IndexedDB persistence and legacy recovery |
+| `src/artifacts/` | Shared templates, audience boundaries, HTML and ZIP rendering |
+| `src/app.js`, `src/views.js`, `src/styles.css` | Browser interaction and accessible responsive presentation |
+| `examples/` | Sanitized Fellowship-inspired worked example |
+| `tests/` | Domain/storage checks, scenarios A–G and browser journeys |
+| `docs/`, `docs/adr/` | Source audit, models, privacy, deployment and consequential decisions |
+
+Vite packages the existing standards-based presentation layer. The canonical schema, migrations and template boundary use strict TypeScript; existing JS UI modules are linted and can migrate incrementally. [ADRs](docs/adr/) explain this choice and the local-first architecture.
+
+## Source and theological scope
+
+The design grew from Fellowship Baptist Church’s Independent Fundamental Baptist source package: START HERE, seven working documents, eight handouts and five references. Preparation before candidates, gates before fit, character before charisma, evidence before impressions, and confidentiality without secrecy remain central.
+
+Named people, private staffing intentions, calendar and tenure are excluded from the example. Source committee composition and call thresholds appear only in labeled example configuration. Quorum and notice remain unknown where the sources did not establish them. Theology, music, translation practice and cooperation positions are configurable topics, not automatic doctrine. The source’s weighted rubric becomes an unscored evidence worksheet; the superseded guide remains historical.
+
+Read the [source audit](docs/source-content-audit.md), [domain model](docs/domain-model.md), [content model](docs/content-model.md), and [theology and scope](docs/theology-and-scope.md). Original private source documents are not bundled. Attribution is not endorsement.
+
+## Quality and contribution
+
+```sh
+npm run format:check
 npm run check
 npm test
 npx playwright install chromium
 npm run test:browser
 ```
 
-The application itself has zero third-party runtime dependencies. Development dependencies are pinned browser/accessibility testing tools. The browser suite starts its own temporary local server, exercises editing, persistence, backup/import, conditional safeguards, documents, mobile layouts, keyboard and automated accessibility checks, and cleans up afterward. With installed Chrome, use `CHROME_CHANNEL=chrome npm run test:browser`.
+With installed Chrome, use `CHROME_CHANNEL=chrome npm run test:browser`. The browser suite starts a temporary static server, tests the production build under a subpath, and checks persistence, unknowns, exports, sample isolation, project management, keyboard setup, mobile layouts, accessibility and recovery. Test screenshots and print samples remain ignored under `test-results/`.
 
-The pure domain tests cover milestone boundaries, unknowns, conditional requirements, approval invalidation, schema validation, injection-safe document rendering, audience boundaries, storage failures and stale revisions. Browser checks do not constitute an accessibility certification. Manual testing with assistive technology and pastoral/editorial review remain valuable.
+See [Validation](docs/validation.md) for results actually run, [Contributing](CONTRIBUTING.md), and the issue/PR templates. Pastoral/theological review is still needed for generalized qualification labels, adapted source questions, polity/preset language, and pastoral guidance. Legal/financial/safety wording needs appropriate professional review for each church; tests do not validate those judgments.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+## Intentional next steps
 
-## Initial-release limits
-
-There is no automatic synchronization, collaborative editing, encrypted vault, candidate database, legal/tax advice, background-check service, or offline service-worker cache. Self-hosted/local use needs no outside service. The local server or static host must be reachable to load the application. Browser-agent tools are optional and do not affect ordinary operation.
-
-This is an initial release with documented tests, not an independently vetted pastoral or legal resource. Church leaders should review the content and their own adopted rules before using it to authorize action.
+DOCX and dedicated PDF output, secure optional collaboration, a separately designed local/encrypted candidate workspace, document-assisted workflows with human confirmation, more declared fellowship/polity presets, localization and sanitized cycle archival remain [roadmap](docs/roadmap.md) work. No candidate marketplace, automated pastoral recommendation, or AI scoring is planned for this MVP.
 
 ## License
 

@@ -1,0 +1,230 @@
+{
+  "format": "pastoral-search-toolkit",
+  "schemaVersion": 2,
+  "exportedAt": "2026-09-17T12:00:00.000Z",
+  "project": {
+    "schemaVersion": 2,
+    "id": "fellowship-example",
+    "name": "SAMPLE — Fellowship-inspired pastoral search",
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "updatedAt": "2026-09-17T12:00:00.000Z",
+    "revision": 0,
+    "milestone": "committee",
+    "answers": {
+      "churchName": {
+        "status": "known",
+        "value": "Sample Baptist Church — fictional learning example"
+      },
+      "location": {
+        "status": "known",
+        "value": "A small community (fictional)"
+      },
+      "membership": {
+        "status": "known",
+        "value": "80 members (illustrative, not a source-church fact)"
+      },
+      "attendance": {
+        "status": "known",
+        "value": "About 65 on a typical Sunday (illustrative)"
+      },
+      "identity": {
+        "status": "known",
+        "value": "Independent Fundamental Baptist; example configuration derived from the project that inspired this toolkit."
+      },
+      "event": {
+        "status": "known",
+        "value": "retirement"
+      },
+      "vacant": {
+        "status": "known",
+        "value": "no"
+      },
+      "departingServing": {
+        "status": "known",
+        "value": "yes"
+      },
+      "interim": {
+        "status": "known",
+        "value": "no"
+      },
+      "associate": {
+        "status": "known",
+        "value": "no"
+      },
+      "servicesCovered": {
+        "status": "known",
+        "value": "yes"
+      },
+      "currentAuthority": {
+        "status": "known",
+        "value": "Example: existing church officers continue under their current governing authority. Confirm each responsibility before transfer."
+      },
+      "pulpitPlan": {
+        "status": "known",
+        "value": "Example preparation: the serving pastor covers scheduled services; designated leaders arrange authorized supply when needed."
+      },
+      "immediateMessage": {
+        "status": "known",
+        "value": "Example: an authorized leadership update explains the planned transition and the next meeting."
+      },
+      "operations": {
+        "status": "known",
+        "value": "Example: treasurer and existing officers maintain ordinary operations under current controls."
+      },
+      "recordsAccess": {
+        "status": "known",
+        "value": "Example: assign a secure inventory and access handoff; no credentials belong in this workbook."
+      },
+      "carePlan": {
+        "status": "known",
+        "value": "Example: designate a care coordinator and provide confidential support through existing church channels."
+      },
+      "nextMeeting": {
+        "status": "known",
+        "value": "Example: leadership will agree on the committee formation agenda; date not yet confirmed."
+      },
+      "documents": {
+        "status": "known",
+        "value": "Example derived from source church constitution/bylaws and adopted process. Obtain your own current authoritative documents."
+      },
+      "createAuthority": {
+        "status": "known",
+        "value": "Source-derived example: the church forms the pulpit committee under its governing provisions."
+      },
+      "selectMembers": {
+        "status": "known",
+        "value": "Source-derived example: deacons select additional eligible voting members."
+      },
+      "approveMembers": {
+        "status": "known",
+        "value": "Source-derived example: committee approval requires at least two-thirds of members present; verify notice and quorum separately."
+      },
+      "composition": {
+        "status": "known",
+        "value": "Source-derived example: all deacons plus at least two additional voting members; additional members do not exceed the number of deacons."
+      },
+      "committeeAuthority": {
+        "status": "known",
+        "value": "Example: research and recommend within the authority actually granted; the committee does not call the pastor."
+      },
+      "chairRule": {
+        "status": "known",
+        "value": "Source-derived operating choice: a deacon chairs. This is not presented as a universal constitutional rule."
+      },
+      "chair": {
+        "status": "known",
+        "value": "Example: chair selected through the approved process; no real person identified."
+      },
+      "conflicts": {
+        "status": "known",
+        "value": "Example: disclose interests, record recusal, restrict access, and use independent oversight when an internal person may be considered."
+      },
+      "callAuthority": {
+        "status": "known",
+        "value": "Source-derived example: the congregation makes the final call."
+      },
+      "callMethod": {
+        "status": "known",
+        "value": "vote"
+      },
+      "voteThreshold": {
+        "status": "known",
+        "value": "Source-derived example: two-thirds of eligible members present. Verify the complete governing provision and denominator."
+      },
+      "preachRule": {
+        "status": "known",
+        "value": "Source-derived example: the candidate preaches before the call decision."
+      },
+      "meetingRule": {
+        "status": "known",
+        "value": "Source-derived example: recommendation precedes the following midweek worship service business meeting. Confirm eligibility, quorum, and notice from current documents."
+      },
+      "pastoralModel": {
+        "status": "known",
+        "value": "flexible"
+      },
+      "responsibilities": {
+        "status": "known",
+        "value": "Example draft: preaching, teaching, care, evangelism, discipleship, and equipping members; workload to be agreed."
+      },
+      "staff": {
+        "status": "known",
+        "value": "Example: volunteer ministry leaders and deacons share practical work."
+      },
+      "strengths": {
+        "status": "known",
+        "value": "Example: faithful service, personal relationships, and community connections."
+      },
+      "challenges": {
+        "status": "known",
+        "value": "Example: limited volunteer capacity; clarify realistic expectations before presenting the position."
+      },
+      "prospectPool": {
+        "status": "known",
+        "value": "parallel"
+      },
+      "seriousConsideration": {
+        "status": "known",
+        "value": "one"
+      },
+      "internalCandidate": {
+        "status": "known",
+        "value": "no"
+      },
+      "compStatus": {
+        "status": "known",
+        "value": "discussion"
+      },
+      "updateRhythm": {
+        "status": "known",
+        "value": "Example: authorized process updates at regular church gatherings."
+      },
+      "questionChannel": {
+        "status": "known",
+        "value": "Example: questions and suggestions go to the designated committee contact; contact details remain to be confirmed."
+      },
+      "quorum": {
+        "status": "unknown",
+        "value": ""
+      },
+      "notice": {
+        "status": "unknown",
+        "value": ""
+      },
+      "salary": {
+        "status": "unknown",
+        "value": ""
+      },
+      "finalDate": {
+        "status": "unknown",
+        "value": ""
+      }
+    },
+    "reviews": {},
+    "qualifications": {},
+    "requirements": [],
+    "questions": [
+      "i1",
+      "i3",
+      "i5",
+      "i6",
+      "i14",
+      "i18"
+    ],
+    "tasks": [],
+    "inventory": {
+      "constitution": "yes",
+      "bylaws": "yes",
+      "doctrine": "yes",
+      "job": "no",
+      "search": "yes",
+      "policies": "unknown"
+    },
+    "customQuestions": [],
+    "artifactOptions": {
+      "includeStatus": true
+    },
+    "artifactReviews": {},
+    "presetSuggestions": null
+  }
+}

@@ -1,21 +1,27 @@
 # Validation record
 
-Initial feedback preview · September 16, 2026.
+Version 0.2.0 · September 17, 2026. These results were run against the production build, not inferred from implementation.
 
-## Automated checks
+## Local quality suite
 
-- JavaScript syntax, local entrypoint asset references, security-policy presence, and required repository documents.
-- 24 Node domain/storage/document tests: independent entry paths; milestone boundaries; provisional compensation; unknown quorum; conditional interim, associate/internal-candidate and conflict safeguards; working-definition adoption; review invalidation; additional local requirements; final call and handoff; bounded versioned backup/import; invalid dates/choices; safe rendering; candidate/public audience boundaries; corrupt storage; quota failure; and stale/deleted project revisions.
-- Browser smoke suite: orientation and bereavement guidance, keyboard skip navigation, reload persistence, unknown answers, qualification editing, category separation, selected questions, additional prerequisite resolution, every module and document route, Markdown and JSON downloads, imported-copy isolation, and stale-tab protection including switching between projects with unsaved work.
-- Automated axe WCAG 2 A/AA and 2.1 AA checks on representative home, dashboard, governance, convictions, tasks, document and mobile screens.
-- Responsive checks at 390px and 320px; 200% text-size reflow; print emulation and generated PDF sample; no unexpected external runtime requests or uncaught browser errors.
+- Clean `npm ci`: passed; npm reported zero dependency vulnerabilities at this run.
+- `npm run format:check`: passed.
+- `npm run lint`: passed.
+- `npm run typecheck`: passed for the strict TypeScript schema, migrations, reusable-template boundary and Vite configuration. Existing JavaScript presentation/domain modules are linted and behavior-tested, not claimed to have full TypeScript coverage.
+- `npm run build` and repository/asset/security-policy checks: passed.
+- `npm test`: **39 passed, zero failed**. Coverage includes fixtures A–G; milestone boundaries; unknowns; explicit non-voting governance; interim recusal; bivocational workload; schema v1 migration; malformed/future/oversized imports; approval invalidation; identical readiness/artifact bodies across export/import; presets and private-field separation; HTML escaping; audience boundaries; ZIP contents; IndexedDB legacy/corrupt recovery; quota failures; stale updates/deletes.
+- `CHROME_CHANNEL=chrome npm run test:browser`: passed. Exercises all 19 modules and 43 documents, editing, saved reload, unknowns, question selection, extra prerequisites, Markdown/HTML/JSON/ZIP downloads, print emulation, explicit artifact approval and invalidation, temporary sample isolation, duplicate/rename/delete, preset review, alternative call processes, stale tabs and persistent recovery feedback.
+- The browser suite also completes initial setup using keyboard only, exports recoverable work when storage is blocked, migrates a legacy browser project and rejects a damaged import without deleting existing work.
+- Automated axe checks: no WCAG 2 A/AA or 2.1 AA violations on representative landing, dashboard, governance, convictions, task, document and mobile screens.
+- Responsive checks: 320px, 390px and 200% text reflow passed. No uncaught browser errors or unexpected external runtime requests were recorded.
+- All browser paths use a production build served under `/pastoral-search-toolkit/` to verify repository-subpath assets and hash routing.
 
-Screenshots of the desktop home/dashboard and mobile dashboard were inspected. Development screenshots, sample PDFs, project fixtures, and original private source documents are excluded from the public distribution.
+Desktop and mobile screenshots were inspected. A two-page compensation PDF was rendered to PNG and visually checked for margins, readable type, headings, truthful unknowns, page breaks and footer; navigation is excluded. Browser downloads and development screenshots remain ignored in `test-results/`. The intentionally public, anonymized example and fictional scenario builders are committed; private original source documents are not.
 
 ## Scope and limits
 
-The local browser run used installed Chrome on macOS. The GitHub verification workflow also runs the suite in Playwright Chromium on Linux. Automated checks do not certify accessibility; a full manual screen-reader evaluation, additional browsers, real-church field feedback, and independent pastoral/editorial review remain outstanding.
+Local browser checks use installed Chrome on macOS. Both GitHub verification and Pages deployment workflows run the same suite using Playwright Chromium on Linux before publishing. See the repository Actions history for the status of a specific commit.
 
-Optional browser-agent tools were exercised with a registry test adapter, including valid reads/navigation and invalid-input rejection. Native WebMCP registration in a supported browser environment has not been independently verified; ordinary workbook operation does not depend on it.
+Automated checks are not an accessibility certification. Full manual screen-reader testing, additional browsers and real-church feedback remain useful. Optional browser-agent contracts were tested with a registry adapter; ordinary operation does not depend on native browser-agent support.
 
-No church governance, doctrine, safety compliance or candidate eligibility has been independently verified by software tests. All generated documents remain working drafts for church review.
+Software tests do not independently verify doctrine, governance, safety compliance, church approval or candidate eligibility. Pastoral/theological review of generalized content and appropriate professional review of each church’s legal/financial/safety process remain necessary.

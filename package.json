@@ -1,22 +1,40 @@
 {
   "name": "pastoral-search-toolkit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "A free, private, self-hostable workbook for pastoral transition and search.",
   "license": "MIT",
   "scripts": {
-    "dev": "node scripts/serve.mjs",
-    "start": "node scripts/serve.mjs",
-    "test": "node --test tests/*.test.mjs",
-    "check": "node scripts/check.mjs",
-    "test:browser": "node tests/browser.mjs"
+    "dev": "vite --host 127.0.0.1",
+    "start": "npm run build && npm run preview",
+    "test": "node --import tsx --test tests/*.test.mjs",
+    "check": "npm run lint && npm run typecheck && npm run build && node scripts/check.mjs",
+    "test:browser": "node --import tsx tests/browser.mjs",
+    "build": "vite build",
+    "preview": "node scripts/serve.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src scripts tests",
+    "format": "prettier --write src scripts tests vite.config.ts",
+    "format:check": "prettier --check src scripts tests vite.config.ts"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.13.0"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "axe-core": "4.13.0",
-    "playwright": "1.62.1"
+    "eslint": "10.10.0",
+    "fake-indexeddb": "6.2.5",
+    "globals": "17.12.0",
+    "playwright": "1.62.1",
+    "prettier": "3.9.7",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vite": "8.3.0"
+  },
+  "dependencies": {
+    "fflate": "0.8.3",
+    "zod": "4.6.5"
   }
 }

@@ -26,11 +26,13 @@ Device-local storage is the initial privacy boundary. No account, server databas
 14. Finalist & Call
 15. Transition & Handoff
 
+Optional/contextual tools: Sermon Review, Transition Self-Assessment, Interim Ministry, and Bivocational Ministry.
+
 Each has guidance, fields, linked milestones and documents. Its computed state is `NOT_STARTED`, `IN_PROGRESS`, `READY`, `NEEDS_REVIEW`, or `BLOCKED`. READY means its applicable required answers are recorded and a human has reviewed the module; it does not certify truth, legal compliance, biblical eligibility, or readiness at another milestone. Editing invalidates its review. Changed governance or requirements also invalidate dependent reviews. A blocked module remains editable.
 
 ## Answers and requirements
 
-An `Answer` has `status` (`known`, `unknown`, or `not_applicable`) and a string `value`. Each field has a stable ID, label, optional help, module, optional choices, applicability conditions, classification and earliest required milestone. Non-applicability is offered only for genuinely optional/conditional items; quorum and other governing requirements cannot be waived by selecting N/A.
+An `Answer` has `status` (`known`, `unknown`, or `not_applicable`) and a string `value`. Each field has a stable ID, label, optional help, module, optional choices, applicability conditions, classification and earliest required milestone. Non-applicability is offered only for genuinely optional/conditional items; quorum and other governing requirements cannot be waived by selecting N/A. Vote-only fields are omitted only after explicitly selecting a non-voting call process; the alternative decision procedure then becomes required. Unknown applicability keeps the voting safeguards visible.
 
 A `Requirement` has a category, statement, working definition/evidence, and a church-owned adoption state. Categories remain separate:
 
@@ -56,8 +58,12 @@ Readiness is **documented process readiness**, never approval to act. A church m
 
 ## Documents
 
-Documents are deterministic projections of project answers. They carry project name, preparation date, draft/review status, unresolved placeholders, authority notice, and intended audience. Internal worksheets may include deliberation; candidate-facing documents use a deliberate allowlist of fields. Draft compensation uses the specified under-development notice. No unknown values are invented. Printable HTML and Markdown downloads support ordinary office workflows. JSON backup is distinct from a candidate packet.
+Documents are deterministic projections of project answers. They carry the church-name answer, project-update date, draft/review/explicit-approval status, unresolved placeholders, authority notice, and intended audience. Internal worksheets may include deliberation; candidate-facing documents use a deliberate allowlist of fields. Draft compensation uses the specified under-development notice. No unknown values are invented. Printable HTML and Markdown downloads support ordinary office workflows. JSON backup is distinct from a candidate packet.
 
 ## Boundaries
 
 This edition organizes the church's process, not sensitive candidate dossiers. It records reference and safety procedures and completion verification, not criminal-history details or allegations. It offers no tax/legal advice, no background-check service, no candidate matching, and no synchronized multiuser editing.
+
+## Schema v2 and reusable configuration
+
+The canonical TypeScript/Zod schema is `src/schema/pastoral-search-project.ts`. It adds custom questions, artifact options/approval records and separately typed preset suggestions. `migrations.ts` upgrades v1 without guessing missing church decisions. The active project holds private cycle data; a conservative allowlist in `src/domain/templates.ts` extracts reusable fields without copying dates, committee names, compensation or transition circumstances. Free text still requires human privacy review. IndexedDB stores complete project records transactionally, with revision conflict detection and one-time preservation of legacy browser records.

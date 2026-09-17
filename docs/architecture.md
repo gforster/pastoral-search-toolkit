@@ -1,48 +1,26 @@
 # Architecture
 
-## Initial decisions
-
-- Dependency-free, standards-based HTML, CSS and JavaScript ES modules. A static host is sufficient; no vendor account, server database, paid API, or build framework is required to operate the application.
-- Authored deployable files live in `dist/` and are tracked as source. This is intentional: there is no generated bundle. The repository root contains documentation, tests and local server tooling.
-- Browser-local projects plus explicit JSON export/import support privacy and portability. Self-hosting on the same origin preserves browser storage. Different origins/browsers require an exported backup.
-- No remote fonts, analytics, external scripts, candidate uploads or hidden network calls. Content Security Policy restricts active content. Hosting infrastructure can still log normal page requests.
+The application is a static, local-first workbook. Vite builds semantic HTML, CSS, and JavaScript presentation modules with a strict TypeScript/Zod schema and migration layer. It needs no application server, account, database service, paid API, remote fonts, or analytics. See the [ADRs](adr/) for the decision to retain the existing presentation layer instead of rewriting it in React.
 
 ## Layers
 
-`dist/data.js`: declarative module content, field schema, milestones, qualification framework and document definitions. Stable IDs are part of the backup format.
+- `src/schema/`: canonical schema v2, separately versioned reusable church-template schema, explicit v1 migration, import bounds.
+- `src/content/core/`: modules, stable field IDs, milestone requirements, Scripture references, question bank. `guidance/` contains reusable principles; `presets/` contains suggestions, never adopted defaults.
+- `src/domain/`: serializable project logic, explainable readiness and task classification, review invalidation, JSON round-trip, conservative reusable-template extraction.
+- `src/storage/`: IndexedDB transactions, optimistic revisions, one-time legacy migration, raw recovery. The UI serializes saves and keeps unsaved work in memory. BroadcastChannel warns other tabs; transactions enforce conflicts even without notifications.
+- `src/artifacts/templates/`: one structured section model, conditional content, explicit audience field selections. `renderers/`: standalone HTML and ZIP; Markdown and app previews use the same sections.
+- `src/views.js`, `src/app.js`, `src/styles.css`: accessible forms, hash navigation, browser events, save/recovery feedback, responsive handbook presentation and print styles. These existing JS files are linted, not claimed to be fully TypeScript-checked.
+- `examples/`: anonymized, labeled worked example. The sample runs temporarily in memory until the user duplicates it as a local project.
+- `tests/`: Node domain/storage tests through the TypeScript loader, scenario fixtures A–G, Playwright journeys and axe accessibility checks.
 
-`dist/domain.js`: pure project creation, answer handling, applicability, task classification, readiness, module states and backup validation. No DOM or browser storage. Tests focus on milestone boundaries, conditional requirements and malformed imports.
+`dist/` is generated and excluded from Git. `public/` contains static assets copied into it. Relative assets and hash routes work at the GitHub Pages repository subpath. The production server is any ordinary HTTPS static host; `scripts/serve.mjs` is a loopback-only local preview server.
 
-`dist/storage.js`: versioned device storage, defensive loading, revision checks and export-safe errors. Never clears corrupted data automatically.
+## Boundaries
 
-`dist/documents.js`: deterministic document selection and escaping; explicit public/internal field boundaries and honest placeholders.
+Church answers remain strings with explicit known/unknown/not-applicable states. Stable IDs preserve prior backups; typed structure and content-aware runtime validation reject invalid field choices. This edition has 15 core modules and four optional/contextual tools. It does not store candidate dossiers or determine a candidate’s fitness.
 
-`dist/views.js`: escaped HTML view functions for orientation, dashboard, independent modules, question/qualification worksheets, tasks and document preview.
+A project may carry preset suggestions separately from active answers. A TypeScript allowlist can extract reusable configuration, excluding active-search fields. It does not guarantee arbitrary free text is sanitized; a complete sharing/archive UI is deferred.
 
-`dist/app.js`: navigation, editing events, project management, recovery feedback and optional feature-detected browser-agent tools. Hash routes support static hosting and direct links. User values render as text or through a central escaping function.
+Artifacts have a role and computed draft/incomplete/review status. Formal approval requires an explicit approval record and is cleared after relevant workbook edits. Internal provenance records application, schema, template, generation, and project-update versions/dates. Public output shows a modest project-update footer without internal IDs.
 
-`dist/styles.css`: shared design tokens, responsive working surfaces, visible focus, reduced-motion support and dedicated print rules.
-
-`scripts/serve.mjs`: small dependency-free local static server, safe path handling and security headers. Production may use any static server. `npm test` uses the Node test runner; browser verification exercises actual user journeys.
-
-## Content stewardship
-
-Content has an explicit provenance and classification audit. The source package supplied by the user in Google Drive includes START HERE, seven working documents, eight handouts, and five references. The audit records their reusable content and church-specific exceptions; private original documents are not bundled into the public repository. Never imply endorsement or independent review by Fellowship Baptist Church, pastoral counselors, attorneys, or tax professionals. Contribution review must keep doctrine, interpretation, governance, convictions, fit and preference separate.
-
-## Security and durability
-
-- Local storage is unencrypted; avoid candidate personal records. Export is an intentional download; backups are never automatically transmitted.
-- Imports have a size cap, version check, ID/schema allowlists, type/length bounds, and no executable content. An imported project gets a new ID.
-- No `eval`, user-provided HTML, unsafe markup injection, or remote rendering services.
-- Per-project revisions detect stale-tab writes. On conflict, stop saving the stale project and offer backup/reload.
-- Storage failure shows persistent feedback and retains work in memory for export; never claim it saved.
-- Browser data removal is irreversible without backup. Deletion requires a specific confirmation.
-- Print/download actions distinguish internal material from candidate-facing handouts.
-
-## Delivery and maintenance
-
-MIT license, contributor guide, security policy, CI checks and self-hosting instructions accompany the app. GitHub Pages can publish `dist/` directly using the included workflow. Sites hosting is an optional preview/distribution channel, not a runtime dependency. Public GitHub publication depends on an authenticated account and is reported separately from local completion.
-
-## Deliberate limits
-
-No server synchronization, account system, encrypted vault, legal compliance engine, candidate scoring, or background-check integration. Accessibility checks and automated tests provide evidence, not a certification. The initial content requires pastoral/editorial review before describing it as a vetted denominational resource.
+Backups preserve project content and update date, while imports receive a new ID and display name. Document headings use the church-name answer rather than the project display name, so round-trip imports produce identical artifact bodies and readiness.

@@ -60,9 +60,9 @@ All 21 supplied documents were retrieved for this review. Outputs are newly auth
 | H05 – Compensation & Benefits Summary | CONFIGURABLE: placeholder for authorized figures; CORE: no invented values and honest disclosure | Unknown/discussion/provisional/final states, early-stage independence, final approval gate |
 | H06 – Candidate Process Guide | CONFIGURABLE: placeholder for adopted stages; CORE: consent, mutual discernment, courteous closure | Candidate-facing fields; no promises about uncontrollable dates |
 | H07 – Church Governance Summary | CONFIGURABLE: placeholder from current governing documents; CORE: summary cannot amend them | Recorded local rules and authority notice |
-| R00 – Requirements, Preferences, and Interview Questions | CORE: question bank and evidence; CONFIGURABLE: translation, theology, music, cooperation, education | Short adapted question bank with explicit categories; examples never auto-adopted |
+| R00 – Requirements, Preferences, and Interview Questions | CORE: question bank and evidence; CONFIGURABLE: translation, theology, music, cooperation, education | Expanded adapted question bank with core, follow-up, church-specific and scenario groups; examples never auto-adopted |
 | R01 – Overview & Roadmap | CORE: distinct formation and candidate clocks; FELLOWSHIP_SPECIFIC: formation on notice, fall/January schedule | Milestones preserve distinction; no calendar assumptions. Source explains R04 was retired into R05 |
-| R02 – Pulpit Committee Handbook | CORE: full authorized decision, no side channels, evidence, records; CONFIGURABLE: charter | Working fields and draft covenant; no automatic deacon membership or additional veto |
+| R02 – Pulpit Committee Handbook | CORE: full authorized decision, no side channels, evidence, records; CONFIGURABLE: charter | Working fields, draft covenant and full generated handbook; no automatic deacon membership or additional veto |
 | R03 – Associate Pastor & Interim Guidance | CORE: no assumed succession, conflicts, clear temporary authority; CONFIGURABLE: adopted safeguards; FELLOWSHIP_SPECIFIC: personal intentions | Conditional interim/associate/internal-candidate questions and mandatory safeguards before search |
 | R05 – Combined Guide | LEGACY: expressly superseded drafting/reference collection | No independent controlling rules imported; current working documents govern source interpretation |
 
@@ -89,3 +89,7 @@ All 21 supplied documents were retrieved for this review. Outputs are newly auth
 8. **Timing conflict:** source preparation documents sometimes call for finalized packets and compensation before active search. The user expressly permits provisional compensation and independent early work. The app requires honest terms for serious advancement and finalized approved terms before finalist presentation.
 
 Before describing this as an independently vetted church resource, qualified church leaders should review the adaptations. Each church must verify its own adopted rules. Private source files and personal arrangements are excluded from the open-source distribution.
+
+## Continuation implementation (0.2)
+
+The labeled example in `examples/fellowship-baptist.example.json` retains source-derived committee composition, congregational authority and call threshold while removing personal identities, intentions, dates and employment details. Membership/attendance in the example are explicitly fictional. The sources did not establish an exact quorum or notice period, so those remain unknown. The interim/bivocational guides, self-assessment, reference and sermon forms expand reusable principles without importing the historical staffing plan. Qualification headings use plain descriptive wording; stable IDs, order, Scripture references and church-authored definitions are retained. The superseded source R05 remains historical rather than a controlling template.
