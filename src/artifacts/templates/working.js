@@ -118,7 +118,7 @@ export const MEETING_PLAN = [
     'Read actual decisions and assignments aloud; confirm next meeting purpose and limited reading.',
   ],
 ];
-const line = '________________________________';
+const line = '________________________';
 const s = (heading, ...paragraphs) => ({ heading, paragraphs });
 const grid = (heading, columns, rows, paragraphs = []) => ({
   heading,
