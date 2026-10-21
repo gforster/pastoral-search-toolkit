@@ -1937,6 +1937,54 @@
 
 /* Working packet print styles; keep aligned with standalone WORKING_PRINT_CSS. */
 
+.meeting-marker {
+  font:
+    bold 9pt/1.4 Arial,
+    sans-serif;
+  color: #246568;
+  margin: 0.4rem 0 0.6rem;
+}
+.artifact-note {
+  background: #edf4f3;
+  border: 1px solid #8faead;
+  padding: 0.6rem 0.75rem;
+  font:
+    9.5pt/1.4 Arial,
+    sans-serif;
+  margin: 0.6rem 0 0.9rem;
+  break-inside: avoid;
+}
+.artifact-note p {
+  margin: 0.2rem 0;
+}
+.artifact-note strong {
+  color: #182d36;
+}
+.meeting-legend {
+  font:
+    9pt/1.4 Arial,
+    sans-serif;
+}
+.qualification-block {
+  padding: 0.5rem 0;
+  border-top: 1px solid #c6d5d7;
+  break-inside: avoid;
+}
+.qualification-block .qualification-reference {
+  font:
+    italic 9.5pt/1.4 Arial,
+    sans-serif;
+  margin: 0.2rem 0 0.5rem;
+}
+.qualification-block p {
+  font-size: 10.5pt;
+  line-height: 1.4;
+  margin: 0.4rem 0;
+}
+.qualification-block strong {
+  color: #182d36;
+}
+
 .working-packet {
   font:
     10.5pt/1.45 Arial,

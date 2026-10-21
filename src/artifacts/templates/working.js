@@ -1,3 +1,4 @@
+import { documentPresentation } from './presentation.js';
 import { FIELD_MAP, MILESTONES, TRANSITION_GUIDANCE } from '../../data.js';
 import { answerValue, applicable, tasksFor } from '../../domain.js';
 import { makeDocument, availableDocuments } from './documents.js';
@@ -71,8 +72,8 @@ export const FIRST_ASSIGNMENTS = [
     'Establish the current master, member access, backups and draft-minutes review.',
   ],
   [
-    'Congregation updates and questions',
-    'Propose a factual update, release review and a member-question contact.',
+    'Congregation input and updates',
+    'Propose questions, accessible response routes, a return window and an update plan; bring the draft process to meeting 2.',
   ],
   [
     'Later discussion preparation',
@@ -163,7 +164,7 @@ function assignmentSheet() {
     ),
     grid(
       'Assignments',
-      ['Work and first result', 'Lead / helpers', 'First report'],
+      ['Work / first result [1] assign', 'Lead / helpers', '[2] First report'],
       FIRST_ASSIGNMENTS.map(([title, result]) => [
         `${title}\n${result}`,
         'Lead: ______________\nHelp: ______________',
@@ -172,7 +173,7 @@ function assignmentSheet() {
     ),
     s(
       'Carry work forward',
-      'Receiving a report is separate from approving its recommendation. Record actual decisions separately and carry unfinished work to Action follow-up (tab 1).',
+      '[2] is the proposed first check-in, not a completion deadline. Receiving a report is separate from approving its recommendation. Record actual decisions separately and carry unfinished work to Action follow-up (tab 1).',
       `Next meeting / purpose / limited reading: ${line}`,
     ),
   ]);
@@ -227,7 +228,7 @@ export function secondMeetingAgenda() {
       'Purpose and preparation',
       'Aim for 60 minutes: check progress, discuss blockers and make one or two decisions that are ready. Confirm the date and scope at the first meeting.',
       `Proposed date / time / location: ${line}`,
-      'About 48 hours beforehand, each lead sends a short report through the agreed channel: work completed and source, what remains unknown, help or decision needed, recommendation and next action. An honest “not ready” report is useful. The chair circulates a short decision list and relevant material before the meeting; private material stays in the appropriate records.',
+      'About 48 hours beforehand, each lead sends a short report through the agreed channel: work completed and source, what remains unknown, help or decision needed, recommendation and next action. An honest “not ready” report is useful. The chair circulates a short decision list and relevant material before the meeting; private material stays in the appropriate records. The congregation-input lead brings a proposed method and questions for review; collecting responses follows the proper authorization.',
     ),
     grid(
       'One-hour meeting plan',
@@ -251,7 +252,7 @@ export function secondMeetingAgenda() {
         [
           '25–45',
           'One or two prepared decisions',
-          'Discuss evidence, authority and unresolved concerns. Record action, referral or deferral; report receipt is not approval.',
+          'Discuss ready proposals, including the congregation-input plan if prepared. Record approval, revision or deferral; report receipt is not approval.',
         ],
         [
           '45–55',
@@ -270,6 +271,34 @@ export function secondMeetingAgenda() {
       `1. Topic / evidence / proper decision authority: ${line}`,
       `2. Topic / evidence / proper decision authority: ${line}`,
       'Possible topics depend on the reports: service and office coverage, working-record arrangements, verified governing facts, or a next step on budget and compensation. Do not assume a package or policy is ready for adoption. Reserve substantial doctrine, qualifications or governance questions for focused discussion rather than rushing them into a status meeting.',
+    ),
+  ]);
+}
+export function congregationInputPlan() {
+  return form('Congregation input: proposed approach', [
+    s(
+      'First meeting — make the assignment',
+      'Name a lead and helpers to bring a one-page proposal to meeting 2: who is invited, questions, accessible response routes, return window, who receives responses, release approval and a date for reporting themes.',
+      `Lead / helpers / proposal due: ${line}`,
+    ),
+    s(
+      'A small, accessible starting option',
+      'Suggest a short paper response card, with the same questions available by phone or a brief conversation. Explain the purpose through the church’s existing channel. A one-to-two-week response window may be enough; the committee should choose it.',
+    ),
+    s(
+      'Three possible questions',
+      'What strengths of our church should we preserve and strengthen?',
+      'What ministry needs or opportunities should receive attention in the next few years?',
+      'How can members help the church address those needs during and after the transition?',
+    ),
+    s(
+      'Second meeting — review before release',
+      'Review questions and response routes, name the response keeper, confirm release approval and agree how themes will be reported. Record revisions or deferral if the proposal is not ready.',
+      `Approval route / response window / summary date: ${line}`,
+    ),
+    s(
+      'Future meeting — use what was heard',
+      'Summarize themes, supporting examples and differing views without naming ordinary respondents. Use the findings in the self-assessment, profile and pastoral-role discussion. Input does not amend doctrine, establish qualifications or replace required church action. Route specific personal or safety concerns through the appropriate separate process.',
     ),
   ]);
 }
@@ -397,7 +426,7 @@ function binderGroups(p) {
       form('Action follow-up', [
         s(
           'Return to unfinished work',
-          'A report received is not a decision approved. Bring evidence and unresolved concerns back for the proper action.',
+          '[2] is the proposed first check-in, not a completion deadline. A report received is not a decision approved. Bring evidence and unresolved concerns back for the proper action.',
         ),
         grid(
           'Follow-up log',
@@ -468,6 +497,7 @@ function binderGroups(p) {
           `Agreed priority / lead / first action / review date: ${line}`,
         ),
       ]),
+      congregationInputPlan(),
     ],
     [
       form('Doctrine and ministry practices review', [
@@ -716,9 +746,14 @@ export function makeWorkingPacket(p, id) {
           ),
         ]),
       );
+    if (id === 'chair-guide') documents.push(congregationInputPlan());
     documents.push(secondMeetingAgenda());
     groups = [{ title: definition.title, documents }];
   }
+  groups = groups.map((group) => ({
+    ...group,
+    documents: group.documents.map((doc) => ({ ...doc, ...documentPresentation(p, doc) })),
+  }));
   return {
     ...definition,
     church,

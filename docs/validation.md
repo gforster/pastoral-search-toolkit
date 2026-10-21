@@ -1,5 +1,12 @@
 # Validation record
 
+## Meeting-focus revision — 0.4.1, October 21, 2026
+
+- Formatting, lint, schema typecheck, production build and repository checks passed. **74 unit tests passed**, including five added regressions for meeting marks without mutation/approval; draft versus recorded-adoption notes; all 26 qualification blocks, 26 references and 104 emphasized content labels; the assigned congregation-input proposal; and the renamed governance document with its stable ID and constitutional boundary.
+- The full production workbook, collaboration and working-packet browser suites passed on installed Chrome 155.0.8059.85 on macOS. The packet journey also checks the meeting legend, revision notes, 26 structured qualification entries and the Committee Governance Summary. Responsive layout, axe, downloads, persistence and print checks remain included. Firefox/WebKit binaries are unavailable locally; responsive emulation is not a physical-phone test.
+- The shared presentation module escapes all displayed input and is used by the in-app view, individual documents, standalone printable HTML and packet ZIP. App styling stays in the existing CSP-approved stylesheet; CSP, schema/storage, readiness and audience allowlists are unchanged.
+- Private Word/PDF editorial checks remain outside Git. No private church packet, staffing details or original source documents are included in this release.
+
 ## Working packet release — 0.4.0, October 21, 2026
 
 The isolated checkout began at the published default-branch commit `d0309ae`. Before changes, `npm run check`, all 58 unit tests and the existing workbook/collaboration browser suites passed locally.

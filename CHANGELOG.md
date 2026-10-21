@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 — 2026-10-21
+
+- Mark first-meeting assignments, proposed second-meeting reports and future work with printable `[1]`, `[2]` and `[F]` labels; these planning marks do not change readiness or imply approval.
+- Add revision notes for draft definitions, proposed policies, source checks and documents needing review. Respect recorded adoption instead of labeling approved church inputs as samples.
+- Format all 26 qualification entries as coherent blocks with separate Scripture references and bold evidence/judgment labels; preserve all recorded content.
+- Rename the generated Committee Governance Summary while retaining its stable document ID and authority boundaries.
+- Make congregation input an explicit assignment, with a suggested paper/phone response process, second-meeting proposal review and later use of themes in self-assessment and role preparation.
+
 ## 0.4.0 — 2026-10-21
 
 - Assemble a twelve-tab working binder, two-hour first-meeting agenda, chair’s guide and proposed one-hour follow-up agenda from current workbook inputs, with a shared eight-task assignment sheet.

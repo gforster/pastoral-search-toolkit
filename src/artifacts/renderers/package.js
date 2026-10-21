@@ -1,3 +1,4 @@
+import { DOCUMENT_FOCUS_CSS } from '../templates/presentation.js';
 import { zipSync, strToU8 } from 'fflate';
 import {
   makeDocument,
@@ -13,7 +14,7 @@ export function standaloneHtml(doc) {
   body{font:11pt/1.6 Georgia,serif;color:#172e3b;max-width:7.2in;margin:2rem auto;padding:1rem;overflow-wrap:anywhere}
   h1{font-size:25pt;line-height:1.15}h2{font-size:14pt;break-after:avoid}p{white-space:pre-line;orphans:3;widows:3}header{border-bottom:2px solid #8c582f;padding-bottom:1rem}.eyebrow,footer{font:9pt/1.5 system-ui,sans-serif}footer{margin-top:2rem;border-top:1px solid #aaa;padding-top:.7rem}.document-notice{font-size:9pt}section{margin:1.5rem 0}section p{margin:.6rem 0}
   @page{size:letter;margin:.65in}@media print{body{margin:0;padding:0;max-width:none;color:#000}a{color:inherit}header{break-after:avoid}section{break-inside:auto}h2+p{break-before:avoid}}
-  </style></head><body>${documentHtml(doc)}</body></html>`;
+  ${DOCUMENT_FOCUS_CSS}</style></head><body>${documentHtml(doc)}</body></html>`;
 }
 export function generatePackage(p) {
   const files = {};

@@ -2,6 +2,12 @@
 
 ## Expected working outcome
 
+Printouts use **[1] First meeting**, **[2] Proposed second meeting** and **[F] Future meetings**, with an action such as assign, report, discuss or authorize. A sheet can have more than one mark. The marks are a proposed meeting plan, not dates, readiness gates, completed tasks or approvals. Numbered tabs remain useful as replacement sheets are added; the HTML packet adds no continuous page counters. Browser-provided print headers/footers are controlled by the browser's print settings.
+
+Boxed revision notes identify draft working definitions, proposed procedures, source gaps and material needing review before distribution. Notes use the actual recorded adoption state: adopted church definitions are not relabeled as samples. The 26 qualification blocks keep the church's recorded content, show the reference separately and emphasize meaning, evidence, contrary patterns and judgment questions. The **Committee Governance Summary** keeps the existing `governance` ID and expressly defers to the actual church constitution and adopted sources.
+
+**Congregation input and updates** is one of the eight shared assignments. The chair's guide and binder include a suggested approach: assign a lead at meeting 1, review questions/accessible response routes and authorization at meeting 2, then discuss themes at a later session. Paper cards and equivalent phone/conversation options avoid requiring another application. The proposal preserves differing views, routes personal/safety matters separately, and does not turn feedback into a vote or an amendment of church standards.
+
 The default printable outcome should help the committee accomplish its next work. A page should supply a needed current fact or source, support a concrete decision, assign a result, or provide space to record evidence and follow-through. Avoid repeated handbooks, empty divider pages and several worksheets asking the same question. Keep unresolved matters truthful and distinguish current work from later prerequisites.
 
 **Documents & handouts** offers five assembled packets as well as the existing individual documents:

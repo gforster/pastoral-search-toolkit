@@ -1,3 +1,4 @@
+import { documentPresentation } from './presentation.js';
 import { EXTRA_DOCUMENTS, extraSections, selectedQuestions } from './additional.js';
 import { TRANSITION_GUIDANCE } from '../../data.js';
 import { HANDOFF_ITEMS, SCORE_NOTICE } from '../../content/guidance/principles.js';
@@ -119,7 +120,7 @@ export const DOCUMENTS = [
   {
     id: 'governance',
     code: 'H07',
-    title: 'Church Governance Summary',
+    title: 'Committee Governance Summary',
     audience: 'Candidate',
     description: 'The church’s recorded rules; no invented thresholds.',
   },
@@ -431,7 +432,7 @@ export function makeDocument(p, id) {
           '☐ H04 Pastoral Position Description',
           '☐ H05 Compensation & Benefits Summary, or an explicit approved deferral',
           '☐ H06 Candidate Process Guide',
-          '☐ H07 Church Governance Summary',
+          '☐ H07 Committee Governance Summary',
           '☐ Current adopted doctrinal statement — supply the authoritative document',
           '☐ Current constitution/bylaws — supply the authoritative documents',
           'These attachments are not automatically included in this cover sheet.',
@@ -644,6 +645,13 @@ export function makeDocument(p, id) {
   }
   sections = sections.map((s) => ({
     ...s,
+    ...(id === 'qualifications' && /^\d+\./.test(s.heading)
+      ? {
+          qualification: true,
+          displayHeading: s.heading.split(' — ')[0],
+          reference: s.heading.split(' — ').slice(1).join(' — '),
+        }
+      : {}),
     paragraphs: s.paragraphs.length ? s.paragraphs : ['[TO BE CONFIRMED / no items recorded]'],
   }));
   const missing = sections.filter((s) => s.required && s.unresolved);
@@ -667,6 +675,7 @@ export function makeDocument(p, id) {
         : 'READY FOR COMMITTEE REVIEW';
   return {
     ...definition,
+    ...documentPresentation(p, definition),
     church: answerValue(p, 'churchName') || 'Church name to be confirmed',
     date:
       new Intl.DateTimeFormat('en-US', {
@@ -680,25 +689,36 @@ export function makeDocument(p, id) {
     includeStatus: p.artifactOptions.includeStatus,
     approval: review?.record || '',
     provenance: {
-      applicationVersion: '0.4.0',
+      applicationVersion: '0.4.1',
       schemaVersion: p.schemaVersion,
-      templateVersion: '2026-10-21.1',
+      templateVersion: '2026-10-21.2',
       projectUpdatedAt: p.updatedAt,
       generatedAt: new Date().toISOString(),
     },
   };
 }
+export function documentPresentationHtml(doc) {
+  return `${doc.focus ? `<p class="meeting-marker">${e(doc.focus)}</p>` : ''}${doc.note ? `<aside class="artifact-note"><strong>${e(doc.note.title)}</strong><p>${e(doc.note.body)}</p></aside>` : ''}`;
+}
 export function documentSectionsHtml(doc, level = 2) {
   const tag = level === 3 ? 'h3' : 'h2';
+  const paragraph = (text, qualification) => {
+    const match =
+      qualification &&
+      /^(Working meaning|Evidence to seek|Disqualifying pattern|Questions \/ cases requiring judgment): (.*)$/s.exec(
+        text,
+      );
+    return match ? `<p><strong>${e(match[1])}:</strong> ${e(match[2])}</p>` : `<p>${e(text)}</p>`;
+  };
   return doc.sections
     .map(
       (s) =>
-        `<section><${tag}>${e(s.heading)}</${tag}>${s.paragraphs.map((p) => `<p>${e(p)}</p>`).join('')}${s.columns ? `<div class="work-table-wrap"><table class="work-table ${e(s.layout || '')}"><thead><tr>${s.columns.map((c) => `<th scope="col">${e(c)}</th>`).join('')}</tr></thead><tbody>${s.rows.length ? s.rows.map((row) => `<tr>${row.map((cell) => `<td>${e(cell)}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${s.columns.length}">No open items recorded in this category.</td></tr>`}</tbody></table></div>` : ''}</section>`,
+        `<section${s.qualification ? ' class="qualification-block"' : ''}><${tag}>${e(s.displayHeading || s.heading)}</${tag}>${s.reference ? `<p class="qualification-reference">${e(s.reference)}</p>` : ''}${s.paragraphs.map((p) => paragraph(p, s.qualification)).join('')}${s.columns ? `<div class="work-table-wrap"><table class="work-table ${e(s.layout || '')}"><thead><tr>${s.columns.map((c) => `<th scope="col">${e(c)}</th>`).join('')}</tr></thead><tbody>${s.rows.length ? s.rows.map((row) => `<tr>${row.map((cell) => `<td>${e(cell)}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${s.columns.length}">No open items recorded in this category.</td></tr>`}</tbody></table></div>` : ''}</section>`,
     )
     .join('');
 }
 export function documentHtml(doc) {
-  return `<article class="document-sheet"><header><p class="eyebrow">${e(doc.code)} · ${e(doc.audience)} material${doc.includeStatus ? ` · ${e(doc.status)}` : ''}</p><h1>${e(doc.title)}</h1><p>${e(doc.church)}<br>Project updated ${e(doc.date)}</p></header><p class="document-notice">Review and approve before use or distribution. Unknowns are shown explicitly. ${e(AUTHORITY_NOTICE)}</p>${doc.sections.map((s) => `<section><h2>${e(s.heading)}</h2>${s.paragraphs.map((p) => `<p>${e(p)}</p>`).join('')}</section>`).join('')}<footer>Generated with Pastoral Search Toolkit · Project updated ${e(doc.date)} · Recorded answers, not independent verification.</footer></article>`;
+  return `<article class="document-sheet"><header><p class="eyebrow">${e(doc.code)} · ${e(doc.audience)} material${doc.includeStatus ? ` · ${e(doc.status)}` : ''}</p><h1>${e(doc.title)}</h1><p>${e(doc.church)}<br>Project updated ${e(doc.date)}</p></header>${documentPresentationHtml({ ...doc, focus: doc.audience === 'Internal' ? doc.focus : undefined })}<p class="document-notice">Review and approve before use or distribution. Unknowns are shown explicitly. ${e(AUTHORITY_NOTICE)}</p>${documentSectionsHtml(doc)}<footer>Generated with Pastoral Search Toolkit · Project updated ${e(doc.date)} · Recorded answers, not independent verification.</footer></article>`;
 }
 export function documentMarkdown(doc) {
   const safe = (s) =>
@@ -708,7 +728,7 @@ export function documentMarkdown(doc) {
       .replaceAll('>', '&gt;')
       .replace(/[\\`*_{}[\]()#!|]/g, '\\$&');
   return (
-    `# ${doc.title}\n\n${safe(doc.church)} · ${doc.date}\n\n**${doc.includeStatus ? doc.status + ' · ' : ''}${doc.audience} material. Review and approve before use or distribution.**\n\n${AUTHORITY_NOTICE}\n\n` +
+    `# ${doc.title}\n\n${safe(doc.church)} · ${doc.date}\n\n**${doc.includeStatus ? doc.status + ' · ' : ''}${doc.audience} material. Review and approve before use or distribution.**\n\n${AUTHORITY_NOTICE}\n\n${doc.focus && doc.audience === 'Internal' ? `**${safe(doc.focus)}**\n\n` : ''}${doc.note ? `> **${safe(doc.note.title)}**\n> ${safe(doc.note.body)}\n\n` : ''}` +
     doc.sections
       .map((s) => `## ${safe(s.heading)}\n\n${s.paragraphs.map(safe).join('\n\n')}`)
       .join('\n\n') +
