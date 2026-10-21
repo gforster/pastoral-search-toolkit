@@ -24,7 +24,14 @@ import {
   resolved,
   qualificationCount,
 } from './domain.js';
-import { makeDocument, documentHtml, availableDocuments } from './documents.js';
+import {
+  makeDocument,
+  documentHtml,
+  availableDocuments,
+  WORKING_PACKETS,
+  makeWorkingPacket,
+  workingPacketHtml,
+} from './documents.js';
 export const base = (p) => `#project/${p.id}`;
 export const stateLabels = {
   NOT_STARTED: 'Not started',
@@ -180,7 +187,7 @@ export function dashboardView(p) {
             '',
           )}</ul><a class="small" href="${base(p)}/tasks/REQUIRED_LATER">View later requirements →</a>`
       : '<p>No later required items remain in this workbook. Check your church’s additional requirements.</p>'
-  }</section></div><section class="workbook-section"><div class="section-heading"><h2>Your workbook</h2><span>15 core modules + 4 optional tools · no mandatory sequence</span></div><div class="module-grid">${MODULES.map((m, i) => `<a class="module-card" href="${base(p)}/module/${m.id}"><div><span class="card-number">${String(i + 1).padStart(2, '0')}</span>${badge(moduleState(p, m.id))}</div><h3>${m.short}</h3><p>${m.intro}</p><span class="small">${FIELDS.filter((f) => f.module === m.id && applicable(p, f) && !resolved(p, f)).length} unresolved items${m.optional ? ' · Optional / when relevant' : ''}</span></a>`).join('')}</div></section><section class="workbook-section"><h2>Useful documents now</h2><p>Drafts are available at every stage, with missing information clearly marked.</p><div class="actions"><a class="button" href="${base(p)}/documents/start">Customized START HERE</a><a class="button" href="${base(p)}/documents">Browse ${availableDocuments(p).length} available documents</a><button class="button" data-zip>Download Full Search Packet (ZIP)</button></div></section><details class="preset-panel"><summary>Optional suggested starting values</summary><p>Independent Baptist Congregational Starter: assumes a congregational final call and a search committee. Suggested values do not replace existing answers or your governing documents.</p><button class="button" data-preset>Load suggestions for individual review</button>${
+  }</section></div><section class="workbook-section"><div class="section-heading"><h2>Your workbook</h2><span>15 core modules + 4 optional tools · no mandatory sequence</span></div><div class="module-grid">${MODULES.map((m, i) => `<a class="module-card" href="${base(p)}/module/${m.id}"><div><span class="card-number">${String(i + 1).padStart(2, '0')}</span>${badge(moduleState(p, m.id))}</div><h3>${m.short}</h3><p>${m.intro}</p><span class="small">${FIELDS.filter((f) => f.module === m.id && applicable(p, f) && !resolved(p, f)).length} unresolved items${m.optional ? ' · Optional / when relevant' : ''}</span></a>`).join('')}</div></section><section class="workbook-section"><h2>Useful documents now</h2><p>Drafts are available at every stage, with missing information clearly marked.</p><div class="actions"><a class="button primary" href="${base(p)}/documents/working-binder">Working committee binder</a><a class="button" href="${base(p)}/documents/meeting-agenda">First meeting packet</a><a class="button" href="${base(p)}/documents">Browse ${availableDocuments(p).length} available documents</a><button class="button" data-zip>Download Full Search Packet (ZIP)</button></div></section><details class="preset-panel"><summary>Optional suggested starting values</summary><p>Independent Baptist Congregational Starter: assumes a congregational final call and a search committee. Suggested values do not replace existing answers or your governing documents.</p><button class="button" data-preset>Load suggestions for individual review</button>${
     p.presetSuggestions
       ? `<ul>${Object.keys(p.presetSuggestions.answers)
           .map(
@@ -296,6 +303,10 @@ export function tasksView(p, filter = 'ALL') {
 }
 export function documentsView(p, id) {
   const docs = availableDocuments(p);
+  if (WORKING_PACKETS.some((packet) => packet.id === id)) {
+    const packet = makeWorkingPacket(p, id);
+    return `<div class="document-toolbar no-print"><a href="${base(p)}/documents">← All documents</a><div class="actions"><button class="button" data-working-html="${id}">Download printable HTML</button><button class="button primary" data-print>Print / save as PDF</button></div></div><p class="notice no-print">Internal working draft. Review the whole packet before printing. Completing a paper sheet does not update browser answers or approve a decision; reconcile it with the agreed working master after the meeting.</p>${workingPacketHtml(packet, true)}`;
+  }
   if (id) {
     const d = docs.find((d) => d.id === id);
     if (!d)
@@ -303,14 +314,14 @@ export function documentsView(p, id) {
     const doc = makeDocument(p, id);
     return `<div class="document-toolbar"><a href="${base(p)}/documents">← All documents</a><div class="actions"><button class="button" data-markdown="${id}">Download Markdown</button><button class="button" data-html="${id}">Download printable HTML</button><button class="button primary" data-print>Print / save as PDF</button></div></div><div class="notice no-print">${d.audience === 'Internal' ? 'Internal committee material. Store completed candidate worksheets securely outside this toolkit.' : 'Review every section before sharing. Only selected fields for this audience appear, but you are responsible for what you entered.'} Browser print lets you save a PDF.</div><details class="artifact-review no-print"><summary>Document status: ${e(doc.status)}</summary><p>Readiness is not church approval. Resolve missing required inputs, review the whole document, and record the proper authority’s actual approval.</p>${doc.approval ? `<p><strong>Approval record:</strong> ${e(doc.approval)}</p>` : ''}<label for="artifact-approval">Approval record (person or body, date, and intended use)</label><input id="artifact-approval" maxlength="1000"><button class="button" data-approve-artifact="${id}" ${doc.incomplete ? 'disabled' : ''}>Record approved for use</button></details>${documentHtml(doc)}`;
   }
-  return `<p class="eyebrow">FROM YOUR WORKBOOK TO THE PEOPLE WHO NEED IT</p><h1>Documents & handouts</h1><p class="lede">Your recorded answers become usable drafts. Missing information stays visible; nothing is invented.</p><div class="notice">Preview and approve before distribution. Supply authoritative doctrine and governing documents separately. The full ZIP contains private internal material and a complete project backup.</div><label class="check-label no-print"><input type="checkbox" data-artifact-status ${p.artifactOptions.includeStatus ? 'checked' : ''}>Include document status labels in exports</label><div class="actions"><button class="button primary" data-zip>Download Full Search Packet (ZIP)</button><button class="button" data-export>Download Project Backup</button></div>${[
+  return `<p class="eyebrow">FROM YOUR WORKBOOK TO THE PEOPLE WHO NEED IT</p><h1>Documents & handouts</h1><p class="lede">Your recorded answers become usable drafts. Missing information stays visible; nothing is invented.</p><div class="notice">Preview and approve before distribution. Supply authoritative doctrine and governing documents separately. The full ZIP contains private internal material and a complete project backup.</div><section class="workbook-section"><h2>Print a working packet</h2><p>Start with the twelve-tab working binder and first meeting agenda. The chair’s guide helps lead the meeting; a proposed one-hour second agenda can be handed out in advance. Keep later forms separate and print them when the stage calls for them. Page count depends on your answers.</p><div class="documents-grid">${WORKING_PACKETS.map((packet) => `<a class="document-card" href="${base(p)}/documents/${packet.id}"><h3>${e(packet.title)}</h3><p>${e(packet.description)}</p><span class="small">Preview and print →</span></a>`).join('')}</div><p class="small">Back up after substantial edits. Paper notes need to be reconciled with the agreed working master; they do not save into the website automatically.</p></section><label class="check-label no-print"><input type="checkbox" data-artifact-status ${p.artifactOptions.includeStatus ? 'checked' : ''}>Include document status labels in exports</label><div class="actions"><button class="button primary" data-zip>Download Full Search Packet (ZIP)</button><button class="button" data-export>Download Project Backup</button></div>${[
     'Internal',
     'Candidate',
     'Congregation',
   ]
     .map(
       (a) =>
-        `<section class="workbook-section"><h2>${a === 'Internal' ? 'Working documents & reference guides' : a === 'Candidate' ? 'Candidate handouts' : 'For the congregation'}</h2><div class="documents-grid">${docs
+        `<section class="workbook-section"><h2>${a === 'Internal' ? 'Individual working documents & reference guides' : a === 'Candidate' ? 'Candidate handouts' : 'For the congregation'}</h2><div class="documents-grid">${docs
           .filter((d) => d.audience === a)
           .map(
             (d) =>

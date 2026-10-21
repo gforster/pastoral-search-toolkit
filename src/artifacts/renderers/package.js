@@ -6,6 +6,8 @@ import {
   availableDocuments,
 } from '../templates/documents.js';
 import { serializeBackup, escapeHtml } from '../../domain.js';
+import { WORKING_PACKETS, makeWorkingPacket } from '../templates/working.js';
+import { standaloneWorkingHtml } from './working.js';
 export function standaloneHtml(doc) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${escapeHtml(doc.title)}</title><style>
   body{font:11pt/1.6 Georgia,serif;color:#172e3b;max-width:7.2in;margin:2rem auto;padding:1rem;overflow-wrap:anywhere}
@@ -19,6 +21,8 @@ export function generatePackage(p) {
     files[`pastoral-search/${name}`] = strToU8(content);
   };
   const documents = availableDocuments(p);
+  for (const packet of WORKING_PACKETS)
+    add(`${packet.id}.html`, standaloneWorkingHtml(makeWorkingPacket(p, packet.id)));
   for (const definition of documents) {
     const doc = makeDocument(p, definition.id);
     const folder =
@@ -36,7 +40,7 @@ export function generatePackage(p) {
   add('project.json', serializeBackup(p));
   add(
     'PACKAGE-README.md',
-    `# Full working search packet\n\nThis package contains private internal material and a complete project backup. Review and share individual handouts only with the intended audience. Completed candidate forms belong in your church’s secure records.\n\nOpen START-HERE.html or START-HERE.md. Each document is provided in Markdown and standalone printable HTML. Use the browser’s Print command to save PDFs. Unknown information remains marked. Formal approval is never inferred. Supply authoritative doctrine and governing documents separately.\n\n## Included documents\n\n${documents.map((d) => `- ${d.code}: ${d.title} (${makeDocument(p, d.id).status})`).join('\n')}\n`,
+    `# Full working search packet\n\nThis package contains private internal material and a complete project backup. Review and share individual handouts only with the intended audience. Completed candidate forms belong in your church’s secure records.\n\nStart with working-binder.html and meeting-agenda.html. The chair can use chair-guide.html. Hand out second-meeting.html as a proposed one-hour follow-up; it is also included in the first-meeting packet. Keep later-resources.html separate and print selected forms when needed; the full ZIP is an archive, not a print-everything instruction. START-HERE.html and the individual files remain available. Each document is provided in Markdown and standalone printable HTML. Use the browser’s Print command to save PDFs. Unknown information remains marked. Formal approval is never inferred. Supply authoritative doctrine and governing documents separately.\n\n## Included documents\n\n${documents.map((d) => `- ${d.code}: ${d.title} (${makeDocument(p, d.id).status})`).join('\n')}\n`,
   );
   add('provenance.json', JSON.stringify(makeDocument(p, 'start').provenance, null, 2));
   return zipSync(files, { level: 6 });

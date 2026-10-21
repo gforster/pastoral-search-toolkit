@@ -680,13 +680,22 @@ export function makeDocument(p, id) {
     includeStatus: p.artifactOptions.includeStatus,
     approval: review?.record || '',
     provenance: {
-      applicationVersion: '0.3.1',
+      applicationVersion: '0.4.0',
       schemaVersion: p.schemaVersion,
-      templateVersion: '2026-09-17.2',
+      templateVersion: '2026-10-21.1',
       projectUpdatedAt: p.updatedAt,
       generatedAt: new Date().toISOString(),
     },
   };
+}
+export function documentSectionsHtml(doc, level = 2) {
+  const tag = level === 3 ? 'h3' : 'h2';
+  return doc.sections
+    .map(
+      (s) =>
+        `<section><${tag}>${e(s.heading)}</${tag}>${s.paragraphs.map((p) => `<p>${e(p)}</p>`).join('')}${s.columns ? `<div class="work-table-wrap"><table class="work-table ${e(s.layout || '')}"><thead><tr>${s.columns.map((c) => `<th scope="col">${e(c)}</th>`).join('')}</tr></thead><tbody>${s.rows.length ? s.rows.map((row) => `<tr>${row.map((cell) => `<td>${e(cell)}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${s.columns.length}">No open items recorded in this category.</td></tr>`}</tbody></table></div>` : ''}</section>`,
+    )
+    .join('');
 }
 export function documentHtml(doc) {
   return `<article class="document-sheet"><header><p class="eyebrow">${e(doc.code)} · ${e(doc.audience)} material${doc.includeStatus ? ` · ${e(doc.status)}` : ''}</p><h1>${e(doc.title)}</h1><p>${e(doc.church)}<br>Project updated ${e(doc.date)}</p></header><p class="document-notice">Review and approve before use or distribution. Unknowns are shown explicitly. ${e(AUTHORITY_NOTICE)}</p>${doc.sections.map((s) => `<section><h2>${e(s.heading)}</h2>${s.paragraphs.map((p) => `<p>${e(p)}</p>`).join('')}</section>`).join('')}<footer>Generated with Pastoral Search Toolkit · Project updated ${e(doc.date)} · Recorded answers, not independent verification.</footer></article>`;

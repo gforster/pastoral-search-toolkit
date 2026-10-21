@@ -1,5 +1,19 @@
 # First committee battle test
 
+## First meeting rehearsal and printable fallback
+
+Use a fictional church project before using real committee records. No candidate is needed for this rehearsal.
+
+1. Enter the church name, current transition facts, service/care coverage, known committee authorization and any available governing sources. Leave unknown compensation, membership details and dates unknown. Verify **Overview & next steps** and **Open decisions** distinguish work needed now from later requirements.
+2. Open **Documents & handouts → Working committee binder**. Check the cover, twelve tabs, current facts, qualification definitions, source checklist and writing space. Confirm that no unmade appointment, approval, compensation figure or future date has been invented.
+3. Preview the **First meeting agenda** and **First meeting chair’s guide**. Confirm prayer is followed by organizing formalities, including chair and minutes secretary. Use the same eight-task assignment sheet in all three documents. Agree a lead, helpers, first result and report date rather than trying to settle all later matters during the first meeting.
+   Hand out the **Proposed second meeting agenda** at the first meeting. Confirm its date and limited scope; ask leads for short written reports about 48 hours beforehand. Use that one-hour meeting for blockers, prepared decisions and next assignments, with focused standards/governance study separately if needed.
+4. Download a project backup before distributing or transferring working copies. Print the working binder and agenda for members and the chair’s guide for the chair. Keep **Later search resources** separate; open and print individual forms when needed. Authoritative governing and doctrinal documents remain separately supplied church records.
+5. If technology is unavailable during the meeting, use **Meeting record** (tab 2) for draft minutes, **Decision record** (tab 1) for exact actions and concerns, and **Action follow-up** (tab 1) for reports and unfinished work. Copy these reusable sheets as meetings require. Preserve dissent and actual authority; receiving a report does not approve its recommendation.
+6. After the meeting, one agreed record keeper reconciles paper changes with the current working master. Update the relevant workbook answers and general tasks; preserve the actual minutes and approval records in the church’s chosen records system. Export a fresh backup, restore it in another browser profile and check that the same packet content returns. Paper marks do not update the website automatically.
+
+Minimum screens: **Overview & next steps**, **Open decisions**, the modules containing the facts being updated, and **Documents & handouts**. Detailed candidate collaboration can wait until the committee has reviewed its standards and authorized that work. Compensation, final dates and later procedures may remain open during preparation; applicable requirements must be settled before the relevant later action. The software records this work; the church determines its theology, authority, eligibility, approvals and actual readiness to act.
+
 Use a fictional candidate and a public or church-authorized sermon for the first practice run. The goal is to learn whether the process helps a small committee think independently and work together, without requiring technical skill. No analytics are collected. Keep feedback free of private candidate details.
 
 ## Practice workflow
