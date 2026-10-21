@@ -2078,6 +2078,9 @@
   margin: 0.7in;
 }
 @media print {
+  .working-packet > footer {
+    display: none;
+  }
   .project-main {
     outline: none !important;
   }

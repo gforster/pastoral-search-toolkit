@@ -153,6 +153,7 @@ try {
         if (engine === 'chromium') {
           await page.emulateMedia({ media: 'print' });
           assert.equal(await page.locator('.sidebar').isVisible(), false);
+          assert.equal(await page.locator('.working-packet > footer').isVisible(), false);
           await page.pdf({
             path: `${output}/${id}.pdf`,
             format: 'Letter',
