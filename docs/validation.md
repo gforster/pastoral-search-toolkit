@@ -1,5 +1,20 @@
 # Validation record
 
+## Working packet release — 0.4.0, October 21, 2026
+
+The isolated checkout began at the published default-branch commit `d0309ae`. Before changes, `npm run check`, all 58 unit tests and the existing workbook/collaboration browser suites passed locally.
+
+- `npm run format:check`, `npm run check` (lint, schema typecheck, production build and repository checks), and `npm test`: passed; **69 tests, zero failures**.
+- Eleven added regressions cover twelve substantive tabs; separate later resources; all 26 qualifications and 104 recorded definition/evidence/judgment values; identical eight-task sheets and a 120-minute agenda; truthful unknowns without mutation or inferred approval; saved general assignments; preservation of shared decision concerns/follow-through; exclusion of candidate-linked tasks/decisions; escaping and existing external audience boundaries; optional forms; complete question banks; ZIP/backup restoration; and matching app/standalone styles under the unchanged CSP.
+- `CHROME_CHANNEL=chrome npm run test:browser` includes the existing workbook and collaboration suites plus the working-packet journey, all against the production build under `/pastoral-search-toolkit/`.
+- The added browser journey uses a fresh profile and a fictional church, imports a partially completed project, opens all five packet views, tests contents scrolling without route loss, downloads standalone HTML, reloads saved inputs, checks WCAG 2 A/AA and 2.1 AA axe rules, checks a 390px layout and generates print PDFs. The initial meeting does not require a candidate.
+- Local engine: installed Chrome **155.0.8059.85 on macOS**, driven by Playwright Chromium. A responsive viewport is emulation, not a physical-phone test. Firefox and WebKit binaries are not installed locally; the added harness reports them unavailable and runs them when installed. Chromium is required by the CI configuration.
+- Test screenshots, standalone downloads, PDFs and actual engine results remain ignored under `test-results/working-packets/`. These fixtures contain no private church or candidate information. No private Fellowship packet or original source document is committed.
+
+The five assembled outputs retain the existing static/local-first architecture, project schema, storage, readiness and external field allowlists. They add no direct Word/PDF engine: standalone HTML and browser printing remain the delivery route. Paper records need manual reconciliation with the agreed working master. Page counts vary with input length. Software checks do not approve church decisions.
+
+## Previous release evidence
+
 Version 0.3.1 · September 17, 2026. Browser checks ran against the production build; results below were observed, not inferred from implementation.
 
 ## Local quality suite

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — 2026-10-21
+
+- Assemble a twelve-tab working binder, two-hour first-meeting agenda, chair’s guide and proposed one-hour follow-up agenda from current workbook inputs, with a shared eight-task assignment sheet.
+- Add reusable meeting, decision, coverage and follow-up records with writing space; keep report receipt distinct from approval and preserve unresolved concerns.
+- Separate later candidate forms and complete question banks into a resource packet for selective printing; retain all 43 individual templates and all 26 qualification definitions.
+- Add in-app packet previews, contents navigation, standalone printable HTML and all five assembled packets in the existing private ZIP export.
+- Preserve unknowns, existing readiness rules, backups and external audience boundaries; exclude candidate-linked tasks from the general working binder.
+- Establish usable working pages as the export standard and extend the existing practice guide with a first-meeting rehearsal and paper fallback.
+
 ## 0.3.1 — 2026-09-17
 
 - Make required items explicit across all 19 workbook modules, with named checklists at the top and bottom, persistent inline explanations, and color plus text indicators.

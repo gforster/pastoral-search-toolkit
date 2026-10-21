@@ -1,6 +1,6 @@
 {
   "name": "pastoral-search-toolkit",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "A free, private, self-hostable workbook for pastoral transition and search.",
@@ -10,7 +10,7 @@
     "start": "npm run build && npm run preview",
     "test": "node --import tsx --test tests/*.test.mjs",
     "check": "npm run lint && npm run typecheck && npm run build && node scripts/check.mjs",
-    "test:browser": "node --import tsx tests/browser.mjs && node --import tsx tests/collaboration-browser.mjs",
+    "test:browser": "node --import tsx tests/browser.mjs && node --import tsx tests/collaboration-browser.mjs && node --import tsx tests/working-packets-browser.mjs",
     "build": "vite build",
     "preview": "node scripts/serve.mjs",
     "typecheck": "tsc --noEmit",

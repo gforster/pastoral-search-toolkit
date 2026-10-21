@@ -19,12 +19,15 @@ The public/static version supports local projects and portable committee reviews
 - Turns unknown answers into current decisions, later requirements, recommendations, or optional work. Additional church prerequisites can be assigned an owner and milestone.
 - Keeps biblical qualifications, adopted doctrine, governance, convictions, ministry fit, and preference distinct. All 26 qualification entries retain Scripture references and church-owned definitions.
 - Provides a grouped source question bank, selected core prompts, questions from adopted convictions, custom follow-ups, and scenarios. There is no automatic candidate ranking or total score.
-- Generates **43 templates** across working documents, candidate and congregation handouts, and reference guides. Relevant optional documents appear when enabled. Every draft remains useful with truthful placeholders; approval requires an explicit human record.
+- Assembles a **twelve-tab working binder**, two-hour first-meeting agenda and matching chair’s guide and proposed one-hour second agenda from recorded inputs. Reusable meeting, decision, assignment and follow-up sheets leave space for names, dates and actual action. Later candidate forms and question banks stay in a separate packet for selective printing.
+- Retains **43 individual templates** across working documents, candidate and congregation handouts, and reference guides. Relevant optional documents appear when enabled. Every draft remains useful with truthful placeholders; approval requires an explicit human record.
 - Exports Markdown, standalone printable HTML, whole-project JSON, and a structured ZIP with documents and backup. Use browser printing for PDF.
 - Autosaves projects in **IndexedDB**, with rename, duplicate, confirmed deletion, old-backup migration, corrupt-record recovery, and stale-tab conflict protection.
 - Separates shared church facts, candidate records, individual observations, committee decisions and assigned work. Members can review independently, return small JSON files, and discuss a compilation that preserves minority concerns without scoring candidates.
 
 ## Manual committee workflow
+
+For preparation before candidate review, open **Documents & handouts → Working committee binder**. Print the binder and first-meeting agenda for members; use the chair’s guide to lead the meeting. Print later resources only when needed. Page count depends on the church’s inputs. Paper notes do not automatically update the website: reconcile actual decisions and assignments with the agreed working master, then download a backup. The [practice checklist](docs/collaboration-battle-test.md) includes a first-meeting rehearsal and paper fallback.
 
 1. Chair opens **Committee work & candidates**, adds members and a candidate, and creates a review round with selected evidence and expected reviewers.
 2. Chair downloads a **Review Packet** for each recipient. Packets contain assignment context, not the entire church project or anyone else's review.

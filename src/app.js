@@ -25,7 +25,14 @@ import {
   focusReviewTarget,
   syncModuleReviewFeedback,
 } from './review-feedback.js';
-import { makeDocument, documentMarkdown, standaloneHtml, generatePackage } from './documents.js';
+import {
+  makeDocument,
+  documentMarkdown,
+  standaloneHtml,
+  generatePackage,
+  makeWorkingPacket,
+  standaloneWorkingHtml,
+} from './documents.js';
 import {
   homeView,
   projectsView,
@@ -599,6 +606,20 @@ app.addEventListener('click', async (event) => {
           render();
         },
       );
+    if (d.packetSection)
+      document
+        .getElementById(d.packetSection)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (d.workingHtml) {
+      download(
+        standaloneWorkingHtml(makeWorkingPacket(p, d.workingHtml)),
+        `${safeName(p.name)}-${d.workingHtml}.html`,
+        'text/html;charset=utf-8',
+      );
+      notify(
+        'Working packet downloaded. Print selected resources only when needed; paper changes must be reconciled with the working master.',
+      );
+    }
     if (d.html) {
       download(
         standaloneHtml(makeDocument(p, d.html)),
