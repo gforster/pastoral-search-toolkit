@@ -80,6 +80,14 @@ try {
         'Working committee binder',
       );
       const text = await page.locator('.working-packet').textContent();
+      assert.equal(await page.locator('.qualification-block').count(), 26);
+      assert.equal(await page.locator('.qualification-reference').count(), 26);
+      assert((await page.locator('.artifact-note').count()) >= 5);
+      assert.match(await page.locator('.meeting-legend').textContent(), /\[1\].*\[2\].*\[F\]/);
+      assert.match(
+        await page.locator('.working-packet').textContent(),
+        /Committee Governance Summary/,
+      );
       assert.match(text, /Cedar Brook Fictional Church/);
       assert.match(text, /TBD/);
       assert.match(text, /Not yet proposed/);

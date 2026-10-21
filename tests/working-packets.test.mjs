@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { unzipSync, strFromU8 } from 'fflate';
 import { newProject, setAnswer, importBackup, readiness } from '../src/domain.js';
+import { completeProject } from './fixtures/scenarios.mjs';
 import { QUALIFICATIONS } from '../src/data.js';
 import {
   WORKING_PACKETS,
@@ -15,6 +16,8 @@ import {
   makeDocument,
   documentMarkdown,
   WORKING_PRINT_CSS,
+  documentHtml,
+  MEETING_LEGEND,
 } from '../src/documents.js';
 
 const allDocuments = (packet) => packet.groups.flatMap((group) => group.documents);
@@ -176,9 +179,9 @@ test('CSP-approved app styles match the standalone print renderer', async () => 
   const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
   const normalize = (text) =>
     text
+      .replace(/(?<!\d)0\./g, '.')
       .replace(/\s+/g, '')
-      .replace(/;}/g, '}')
-      .replace(/(?<!\d)0\./g, '.');
+      .replace(/;}/g, '}');
   assert(normalize(css).includes(normalize(WORKING_PRINT_CSS)));
 });
 test('shared decision records retain dissent and follow-through without importing candidate decisions', () => {
@@ -221,4 +224,69 @@ test('proposed second agenda is shared across meeting packets and reserves one h
     JSON.stringify(agenda),
     /substantial doctrine, qualifications or governance questions/,
   );
+});
+
+test('meeting marks identify the planned action and never imply completed approval', () => {
+  const p = newProject();
+  const before = JSON.stringify(p);
+  const packet = makeWorkingPacket(p, 'working-binder');
+  assert(allDocuments(packet).every((doc) => /\[(1|2|F)\]/.test(doc.focus)));
+  const html = standaloneWorkingHtml(packet);
+  for (const mark of ['[1]', '[2]', '[F]']) assert(html.includes(mark));
+  assert(html.includes(MEETING_LEGEND));
+  assert.match(body(packet), /proposed first check-in, not a completion deadline/);
+  assert.equal(JSON.stringify(p), before);
+});
+test('draft definitions and covenant notes respect recorded adoption instead of relabeling all inputs as samples', () => {
+  const p = newProject();
+  assert.match(makeDocument(p, 'qualifications').note.title, /draft/);
+  setAnswer(p, 'qualificationAdoption', 'approved');
+  setAnswer(p, 'qualificationRecord', 'Recorded checkbox alone');
+  assert.match(makeDocument(p, 'qualifications').note.title, /draft/);
+  const adopted = completeProject();
+  assert.match(makeDocument(adopted, 'qualifications').note.title, /recorded working definitions/);
+  assert.doesNotMatch(makeDocument(adopted, 'qualifications').note.title, /sample|draft/);
+  assert.match(makeDocument(adopted, 'covenant').note.title, /recorded covenant approval/);
+});
+test('qualification print blocks retain all 104 values with separate references and clear labels', () => {
+  const p = completeProject();
+  p.qualifications[QUALIFICATIONS[0].id].meaning = '<script>private markup</script>';
+  const html = documentHtml(makeDocument(p, 'qualifications'));
+  assert.equal((html.match(/class="qualification-block"/g) || []).length, 26);
+  assert.equal((html.match(/class="qualification-reference"/g) || []).length, 26);
+  for (const label of [
+    'Working meaning',
+    'Evidence to seek',
+    'Disqualifying pattern',
+    'Questions / cases requiring judgment',
+  ])
+    assert.equal((html.match(new RegExp('<strong>' + label + ':</strong>', 'g')) || []).length, 26);
+  assert.match(html, /&lt;script&gt;private markup&lt;\/script&gt;/);
+  assert.doesNotMatch(html, /<script>/);
+});
+test('congregation input is an assigned proposal, a second-meeting review and later themes, not a vote', () => {
+  const p = newProject();
+  const binder = allDocuments(makeWorkingPacket(p, 'working-binder'));
+  const chair = allDocuments(makeWorkingPacket(p, 'chair-guide'));
+  const plan = binder.find((doc) => doc.title === 'Congregation input: proposed approach');
+  assert.deepEqual(
+    plan,
+    chair.find((doc) => doc.title === plan.title),
+  );
+  assert.match(JSON.stringify(plan), /paper response card/);
+  assert.match(JSON.stringify(plan), /phone or a brief conversation/);
+  assert.match(JSON.stringify(plan), /release approval/);
+  assert.match(JSON.stringify(plan), /does not amend doctrine/);
+  assert.match(body(makeWorkingPacket(p, 'second-meeting')), /congregation-input plan/);
+});
+test('committee governance title retains its stable ID and explicitly defers to the constitution', () => {
+  const p = newProject();
+  const doc = makeDocument(p, 'governance');
+  assert.equal(doc.id, 'governance');
+  assert.equal(doc.title, 'Committee Governance Summary');
+  assert.match(doc.note.title, /not the constitution/);
+  assert.match(doc.note.body, /does not replace or amend/);
+  assert.match(documentMarkdown(doc), /committee reference/);
+  assert.doesNotMatch(documentHtml(doc), /class="meeting-marker"/);
+  assert.doesNotMatch(documentMarkdown(doc), /\[1\].*Clarify authority/);
 });
